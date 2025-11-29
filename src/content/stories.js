@@ -1,6 +1,9 @@
+import { storiesCategories } from '../Utilities/appConstants';
+
 const stories = [
   {
     title: 'The Scarlet Macaw',
+    category: storiesCategories[0],
     description: 'A beautiful scarlet macaw named Ruby who loves to fly high above the trees.',
     image: 'https://img.freepik.com/free-photo/closeup-scarlet-macaw-from-side-view-scarlet-macaw-closeup-head_488145-3540.jpg?semt=ais_hybrid&w=740&q=80',
     pages: [
@@ -28,6 +31,7 @@ const stories = [
   },
   {
     title: 'The Scarlet Macaw',
+    category: storiesCategories[1],
     description: 'A beautiful scarlet macaw named Ruby who loves to fly high above the trees.',
     image: 'https://img.freepik.com/free-photo/closeup-scarlet-macaw-from-side-view-scarlet-macaw-closeup-head_488145-3540.jpg?semt=ais_hybrid&w=740&q=80',
     pages: [
@@ -55,6 +59,7 @@ const stories = [
   },
   {
     title: 'The Scarlet Macaw',
+    category: storiesCategories[2],
     description: 'A beautiful scarlet macaw named Ruby who loves to fly high above the trees.',
     image: 'https://img.freepik.com/free-photo/closeup-scarlet-macaw-from-side-view-scarlet-macaw-closeup-head_488145-3540.jpg?semt=ais_hybrid&w=740&q=80',
     pages: [
@@ -82,6 +87,7 @@ const stories = [
   },
   {
     title: 'The Scarlet Macaw',
+    category: storiesCategories[3],
     description: 'A beautiful scarlet macaw named Ruby who loves to fly high above the trees.',
     image: 'https://img.freepik.com/free-photo/closeup-scarlet-macaw-from-side-view-scarlet-macaw-closeup-head_488145-3540.jpg?semt=ais_hybrid&w=740&q=80',
     pages: [

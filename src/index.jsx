@@ -5,6 +5,7 @@ import GettingStarted from './Screens/GettingStarted';
 import { Platform } from 'react-native';
 import fonts from './Utilities/fonts';
 import StoriesScreen from './Screens/StoriesScreen';
+import HomeScreen from './Screens/HomeScreen';
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,11 @@ function Index() {
         <Stack.Screen
           name='StoriesScreen'
           component={StoriesScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='HomeScreen'
+          component={HomeScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

@@ -11,8 +11,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const IMAGE_HEIGHT = (SCREEN_WIDTH * 5) / 4; // 4:5 ratio
 
-function StoriesScreen({ navigation }) {
+function StoriesScreen({ navigation, route }) {
   const [currentPage, setCurrentPage] = useState(0);
+  
+  // Get story from navigation params or use default
+  const story = route?.params?.story || defaultStory;
 
   const handlePageSelected = (e) => {
     setCurrentPage(e.nativeEvent.position);
@@ -111,8 +114,8 @@ const styles = StyleSheet.create({
 // Exports
 export default StoriesScreen;
 
-// Story Data
-const story = {
+// Default Story Data (fallback)
+const defaultStory = {
   title: 'The Scarlet Macaw',
   description: 'A beautiful scarlet macaw named Ruby who loves to fly high above the trees.',
   image: 'https://img.freepik.com/free-photo/closeup-scarlet-macaw-from-side-view-scarlet-macaw-closeup-head_488145-3540.jpg?semt=ais_hybrid&w=740&q=80',
