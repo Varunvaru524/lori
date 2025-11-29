@@ -7,6 +7,12 @@ import fonts from './Utilities/fonts';
 import StoriesScreen from './Screens/StoriesScreen';
 import HomeScreen from './Screens/HomeScreen';
 import GenerateStoryScreen from './Screens/GenerateStoryScreen';
+import PreferredLanguageScreen from './Screens/PreferredLanguageScreen';
+import ChildAgeScreen from './Screens/ChildAgeScreen';
+import ChildGenderScreen from './Screens/ChildGenderScreen';
+import MoralsLessonsScreen from './Screens/MoralsLessonsScreen';
+import InterestsScreen from './Screens/InterestsScreen';
+import NotificationTimeScreen from './Screens/NotificationTimeScreen';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +35,36 @@ function Index() {
           name='GettingStarted'
           component={GettingStarted}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='PreferredLanguageScreen'
+          component={PreferredLanguageScreen}
+          options={{ title: 'Setup' }}
+        />
+        <Stack.Screen
+          name='ChildAgeScreen'
+          component={ChildAgeScreen}
+          options={{ title: 'Setup' }}
+        />
+        <Stack.Screen
+          name='ChildGenderScreen'
+          component={ChildGenderScreen}
+          options={{ title: 'Setup' }}
+        />
+        <Stack.Screen
+          name='MoralsLessonsScreen'
+          component={MoralsLessonsScreen}
+          options={{ title: 'Setup' }}
+        />
+        <Stack.Screen
+          name='InterestsScreen'
+          component={InterestsScreen}
+          options={{ title: 'Setup' }}
+        />
+        <Stack.Screen
+          name='NotificationTimeScreen'
+          component={NotificationTimeScreen}
+          options={{ title: 'Setup' }}
         />
         <Stack.Screen
           name='HomeScreen'

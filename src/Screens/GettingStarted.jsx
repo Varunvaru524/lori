@@ -7,7 +7,7 @@ import AppButton from '../Components/AppButton';
 
 function GettingStarted({ navigation }) {
   const handleGetStarted = () => {
-    navigation.navigate('HomeScreen');
+    navigation.navigate('PreferredLanguageScreen');
   };
 
   return (
