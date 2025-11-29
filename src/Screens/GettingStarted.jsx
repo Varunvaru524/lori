@@ -5,16 +5,15 @@ import fonts from '../Utilities/fonts';
 import colors from '../Utilities/colors';
 import AppButton from '../Components/AppButton';
 
-function GettingStarted() {
+function GettingStarted({ navigation }) {
   const handleGetStarted = () => {
-    console.log('Get Started pressed');
-    // Add your navigation or action here
+    navigation.navigate('HomeScreen');
   };
 
   return (
     <View style={styles.container}>
       <Image
-        source={{ uri: 'https://drive.google.com/file/d/1YiRIlaLXjKJXV3plGULNOje6fR_1hW3p/view?usp=drive_link' }}
+        source={{ uri: 'https://www.themanthanschool.co.in/blog/wp-content/uploads/2022/07/Bedtime-Stories-for-Children-800x576.jpg' }}
         style={styles.image}
         contentFit="contain"
       />

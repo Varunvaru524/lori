@@ -23,12 +23,6 @@ function StoryCard({ title, style, onCardPress, isFavorite, onCheckPress, thumbn
     }
   }
 
-  // Component styles
-  const checkContainer = {
-    borderColor: (isFavorite ? colors.neutral20 : colors.neutral40),
-    backgroundColor: (isFavorite ? colors.neutral20 : 'transparent')
-  }
-
   // Screen
   return (
     <TouchableOpacity onPress={onCardPress}>
@@ -45,8 +39,8 @@ function StoryCard({ title, style, onCardPress, isFavorite, onCheckPress, thumbn
             end={{ x: 0.5, y: 0.78 }}
           >
             <TouchableOpacity onPress={onCheckPress}>
-              <View style={[styles.checkContainer, checkContainer]}>
-                <MaterialCommunityIcons name='heart' size={16} color={colors.white} />
+              <View style={[styles.checkContainer]}>
+                {isFavorite ? <MaterialCommunityIcons name='heart' size={20} color={colors.white} /> : <MaterialCommunityIcons name='heart-outline' size={20} color={colors.white} />}
               </View>
             </TouchableOpacity>
             <View style={styles.titleContainer}>
@@ -79,10 +73,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   checkContainer: {
-    padding: 2,
     borderWidth: 1,
     borderRadius: 100,
     alignSelf: 'flex-end',
+    borderColor: 'transparent',
   },
   title: {
     ...fonts.titleMedium,

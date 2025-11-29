@@ -7,9 +7,10 @@ import colors from '../Utilities/colors';
 import fonts from '../Utilities/fonts';
 import { storiesCategories } from '../Utilities/appConstants';
 import stories from '../content/stories';
+import AppButton from '../Components/AppButton';
 
 function HomeScreen({ navigation }) {
-  
+
   // Get story of the day (first story for now)
   const storyOfTheDay = stories[0];
 
@@ -23,25 +24,26 @@ function HomeScreen({ navigation }) {
   };
 
   return (
-    <AppLayout>
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        {/* Header */}
-        <View style={styles.header}>
-          <View style={styles.headerLeft}>
-            <Image
-              source={require('../../assets/icon.png')}
-              style={styles.appLogo}
-              contentFit="contain"
-            />
-            <Text style={styles.appName}>Bedtime Stories</Text>
-          </View>
-          <TouchableOpacity>
-            <View style={styles.avatar}>
-              <Text style={styles.avatarText}>U</Text>
-            </View>
-          </TouchableOpacity>
+    <View style={styles.container}>
+      {/* Header - Fixed at top */}
+      <View style={styles.header}>
+        <View style={styles.headerLeft}>
+          <Image
+            source={require('../../assets/icon.png')}
+            style={styles.appLogo}
+            contentFit="contain"
+          />
+          <Text style={styles.appName}>Bedtime Stories</Text>
         </View>
+        <TouchableOpacity>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>U</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
 
+      {/* Scrollable Content */}
+      <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>
         {/* Story of the Day Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Story of the Day</Text>
@@ -77,8 +79,20 @@ function HomeScreen({ navigation }) {
             </View>
           );
         })}
+        
+        {/* Bottom padding to ensure content doesn't hide behind button */}
+        <View style={styles.bottomPadding} />
       </ScrollView>
-    </AppLayout>
+
+      {/* Fixed Button at bottom */}
+      <View style={styles.buttonContainer}>
+        <AppButton 
+          title='Generate Story' 
+          onPress={() => navigation.navigate('GenerateStoryScreen')} 
+          style={styles.button} 
+        />
+      </View>
+    </View>
   );
 }
 
@@ -116,7 +130,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 16,
     borderBottomWidth: 1,
-    borderBottomColor: colors.neutral90
+    borderBottomColor: colors.neutral90,
+    marginTop: 40,
+    backgroundColor: colors.neutral98,
+    zIndex: 1
+  },
+  scrollContent: {
+    flex: 1
   },
   headerLeft: {
     flexDirection: 'row',
@@ -145,18 +165,37 @@ const styles = StyleSheet.create({
   },
   section: {
     marginTop: 24,
-    paddingHorizontal: 24
   },
   sectionTitle: {
     ...fonts.headlineSmall,
     color: colors.neutral20,
-    marginBottom: 16
+    marginBottom: 16,
+    marginLeft: 24
   },
   horizontalScroll: {
-    paddingRight: 24
+    paddingHorizontal: 24
   },
   cardMargin: {
     marginRight: 16
+  },
+  bottomPadding: {
+    height: 100
+  },
+  buttonContainer: {
+    backgroundColor: colors.neutral98,
+    paddingHorizontal: 24,
+    paddingVertical: 16,
+    paddingBottom:34,
+    borderTopWidth: 1,
+    borderTopColor: colors.neutral90,
+    elevation: 8,
+    shadowColor: colors.black,
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8
+  },
+  button: {
+    margin: 0
   }
 });
 
@@ -169,7 +208,8 @@ const storyOfDayStyles = StyleSheet.create({
     shadowColor: colors.black,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 8
+    shadowRadius: 8,
+    marginHorizontal: 24
   },
   image: {
     width: '100%',
