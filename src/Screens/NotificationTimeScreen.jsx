@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, Platform } from 'react-native';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, Platform, Modal } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AppLayout from '../Components/AppLayout';
 import { setUserDetails } from '../libraries/asyncStorage';
@@ -23,9 +23,19 @@ function NotificationTimeScreen({ navigation, route }) {
     setTimePickerVisible(false);
   };
 
-  const handleConfirm = (time) => {
-    setSelectedTime(time);
-    hideTimePicker();
+  const handleConfirm = (event, time) => {
+    if (Platform.OS === 'android') {
+      setTimePickerVisible(false);
+    }
+    
+    if (event.type === 'set' && time) {
+      setSelectedTime(time);
+      if (Platform.OS === 'ios') {
+        // iOS will handle closing via the modal
+      }
+    } else if (event.type === 'dismissed') {
+      hideTimePicker();
+    }
   };
 
   const formatTime = (date) => {
@@ -99,14 +109,46 @@ function NotificationTimeScreen({ navigation, route }) {
           <View style={styles.safeArea} />
         </View>
 
-        <DateTimePickerModal
-          isVisible={isTimePickerVisible}
-          mode="time"
-          onConfirm={handleConfirm}
-          onCancel={hideTimePicker}
-          date={selectedTime}
-          is24Hour={true}
-        />
+        {/* Date Time Picker */}
+        {Platform.OS === 'ios' ? (
+          <Modal
+            visible={isTimePickerVisible}
+            transparent={true}
+            animationType="slide"
+            onRequestClose={hideTimePicker}
+          >
+            <View style={styles.modalOverlay}>
+              <View style={styles.modalContent}>
+                <View style={styles.modalHeader}>
+                  <TouchableOpacity onPress={hideTimePicker}>
+                    <Text style={styles.modalButton}>Cancel</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.modalTitle}>Select Time</Text>
+                  <TouchableOpacity onPress={hideTimePicker}>
+                    <Text style={[styles.modalButton, styles.modalButtonDone]}>Done</Text>
+                  </TouchableOpacity>
+                </View>
+                <DateTimePicker
+                  value={selectedTime}
+                  mode="time"
+                  display="spinner"
+                  onChange={handleConfirm}
+                  textColor="#312E81"
+                  style={{alignSelf:'center'}}
+                />
+              </View>
+            </View>
+          </Modal>
+        ) : (
+          isTimePickerVisible && (
+            <DateTimePicker
+              value={selectedTime}
+              mode="time"
+              display="default"
+              onChange={handleConfirm}
+            />
+          )
+        )}
       </View>
     </AppLayout>
   );
@@ -218,6 +260,38 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     height: 32
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-end'
+  },
+  modalContent: {
+    backgroundColor: '#FFFFFF',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingBottom: 34
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E7EB'
+  },
+  modalTitle: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#312E81'
+  },
+  modalButton: {
+    fontSize: 17,
+    color: '#4F46E5'
+  },
+  modalButtonDone: {
+    fontWeight: '600'
   }
 });
 

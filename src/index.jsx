@@ -53,37 +53,37 @@ function Index() {
         <Stack.Screen
           name='PreferredLanguageScreen'
           component={PreferredLanguageScreen}
-          options={{ title: 'Setup' }}
+          options={{ title: 'Setup', headerShown: false }}
         />
         <Stack.Screen
           name='ChildAgeScreen'
           component={ChildAgeScreen}
-          options={{ title: 'Setup' }}
+          options={{ title: 'Setup', headerShown: false }}
         />
         <Stack.Screen
           name='ChildGenderScreen'
           component={ChildGenderScreen}
-          options={{ title: 'Setup' }}
+          options={{ title: 'Setup', headerShown: false }}
         />
         <Stack.Screen
           name='MoralsLessonsScreen'
           component={MoralsLessonsScreen}
-          options={{ title: 'Setup' }}
+          options={{ title: 'Setup', headerShown: false }}
         />
         <Stack.Screen
           name='InterestsScreen'
           component={InterestsScreen}
-          options={{ title: 'Setup' }}
+          options={{ title: 'Setup', headerShown: false }}
         />
         <Stack.Screen
           name='NotificationTimeScreen'
           component={NotificationTimeScreen}
-          options={{ title: 'Setup' }}
+          options={{ title: 'Setup', headerShown: false }}
         />
         <Stack.Screen
           name='PersonalizeNameScreen'
           component={PersonalizeNameScreen}
-          options={{ title: 'Generate Story' }}
+          options={{ title: 'Generate Story', headerShown: false }}
         />
         <Stack.Screen
           name='HomeScreen'
@@ -98,6 +98,7 @@ function Index() {
         <Stack.Screen
           name='GenerateStoryScreen'
           component={GenerateStoryScreen}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

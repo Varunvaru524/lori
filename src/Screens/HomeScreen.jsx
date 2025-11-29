@@ -11,6 +11,7 @@ import { storiesCategories } from '../Utilities/appConstants';
 import stories from '../content/stories';
 import AppButton from '../Components/AppButton';
 import { clearAllAsyncStorage } from '../libraries/asyncStorage';
+import { NewAiChatIcon } from '../Utilities/utilityFunctions';
 
 function HomeScreen({ navigation }) {
 
@@ -106,7 +107,7 @@ function HomeScreen({ navigation }) {
           onPress={() => navigation.navigate('MoralsLessonsScreen', { isStoryGeneration: true })}
           style={styles.floatingButton}
         >
-          <MaterialCommunityIcons name="sparkles" size={16} color="#1F2937" />
+          <NewAiChatIcon color={colors.black} size={24} />
           <Text style={styles.floatingButtonText}>Generate Story</Text>
         </TouchableOpacity>
       </View>
@@ -148,7 +149,7 @@ function FeaturedStoryCard({ story, onPress }) {
               <Text style={featuredStoryStyles.metadataText}>8 min</Text>
             </View>
             <View style={featuredStoryStyles.metadataItem}>
-              <MaterialCommunityIcons name="sparkles" size={16} color="#EC4899" />
+              <NewAiChatIcon color={'#EC4899'} size={16} />
               <Text style={featuredStoryStyles.metadataTextSmall}>Fantasy</Text>
             </View>
           </View>

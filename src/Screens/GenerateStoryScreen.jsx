@@ -130,7 +130,8 @@ function GenerateStoryScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.neutral98
+    backgroundColor: colors.neutral98,
+    marginTop:30
   },
   closeButton: {
     position: 'absolute',
