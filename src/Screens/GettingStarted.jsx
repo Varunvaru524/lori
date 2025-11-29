@@ -12,24 +12,44 @@ function GettingStarted({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={{ uri: 'https://www.themanthanschool.co.in/blog/wp-content/uploads/2022/07/Bedtime-Stories-for-Children-800x576.jpg' }}
-        style={styles.image}
-        contentFit="contain"
-      />
+      <View style={styles.contentWrapper}>
+        {/* App Name */}
+        <View style={styles.appNameContainer}>
+          <Text style={styles.appName}>DreamTales</Text>
+        </View>
 
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>Welcome to Bedtime Stories</Text>
-        <Text style={styles.subtitle}>
-          Create magical bedtime stories for your little ones with the power of AI
-        </Text>
+        {/* Top spacing */}
+        <View style={styles.topSpacer} />
+
+        {/* Centered Logo/Illustration */}
+        <View style={styles.imageContainer}>
+          <Image
+            source={{ uri: 'https://www.themanthanschool.co.in/blog/wp-content/uploads/2022/07/Bedtime-Stories-for-Children-800x576.jpg' }}
+            style={styles.image}
+            contentFit="cover"
+          />
+        </View>
+
+        {/* Tagline */}
+        <View style={styles.taglineContainer}>
+          <Text style={styles.tagline}>
+            Magical bedtime stories, every night
+          </Text>
+        </View>
+
+        {/* Bottom spacing */}
+        <View style={styles.bottomSpacer} />
+
+        {/* CTA Button */}
+        <AppButton
+          title="Get Started"
+          onPress={handleGetStarted}
+          style={styles.button}
+        />
+
+        {/* Bottom safe area */}
+        <View style={styles.safeArea} />
       </View>
-
-      <AppButton
-        title="Get Started"
-        onPress={handleGetStarted}
-        style={styles.button}
-      />
     </View>
   )
 }
@@ -38,33 +58,64 @@ function GettingStarted({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 24,
-    backgroundColor: colors.neutral98
+    backgroundColor: '#FFF9F5'
   },
-  image: {
-    width: 200,
-    height: 200,
+  contentWrapper: {
+    flex: 1,
+    maxWidth: 448, // max-w-md equivalent
+    width: '100%',
+    alignSelf: 'center',
+    paddingHorizontal: 32,
+    paddingVertical: 48
+  },
+  appNameContainer: {
+    alignItems: 'center',
     marginBottom: 32
   },
-  textContainer: {
-    marginBottom: 40,
-    alignItems: 'center'
+  appName: {
+    fontSize: 36,
+    fontWeight: '600',
+    color: '#4F46E5', // indigo-700
+    fontFamily: 'Quicksand'
   },
-  title: {
-    ...fonts.headlineMedium,
-    textAlign: 'center',
-    marginBottom: 12
+  topSpacer: {
+    flex: 1
   },
-  subtitle: {
-    ...fonts.bodyLarge,
+  imageContainer: {
+    marginHorizontal: -32,
+    marginBottom: 48,
+    height: 320,
+    width: '100%',
+    alignSelf: 'stretch'
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 24
+  },
+  taglineContainer: {
+    alignItems: 'center',
+    marginBottom: 32,
+    paddingHorizontal: 24
+  },
+  tagline: {
+    fontSize: 28,
+    fontWeight: '600',
+    color: '#312E81', // indigo-900
     textAlign: 'center',
-    color: colors.neutral40
+    lineHeight: 36
+  },
+  bottomSpacer: {
+    flex: 1
   },
   button: {
     width: '100%',
-    maxWidth: 300
+    backgroundColor: '#4F46E5', // indigo-600
+    borderRadius: 9999,
+    paddingVertical: 16
+  },
+  safeArea: {
+    height: 32
   }
 })
 
