@@ -6,6 +6,7 @@ import RadioButton from '../Components/RadioButton';
 import colors from '../Utilities/colors';
 import fonts from '../Utilities/fonts';
 
+
 function PersonalizeNameScreen({ navigation, route }) {
   const [useChildName, setUseChildName] = useState('No');
   const [childName, setChildName] = useState('');
@@ -13,34 +14,15 @@ function PersonalizeNameScreen({ navigation, route }) {
   const handleFinish = () => {
     // Collect all the story generation details
     const storyDetails = {
-      ...route.params,
+      moralsLessons: route.params?.moralsLessons || [],
+      interests: route.params?.interests || [],
+      preferredLanguage: route.params?.preferredLanguage || 'English',
       personalizeWithName: useChildName === 'Yes',
-      childName: useChildName === 'Yes' ? childName : null
+      childName: useChildName === 'Yes' ? childName.trim() : null
     };
 
-    // Log the collected details
-    console.log('=== Story Generation Details ===');
-    console.log('Morals/Lessons:', storyDetails.moralsLessons);
-    console.log('Interests:', storyDetails.interests);
-    console.log('Preferred Language:', storyDetails.preferredLanguage);
-    console.log('Personalize with Name:', storyDetails.personalizeWithName);
-    console.log('Child Name:', storyDetails.childName);
-    console.log('================================');
-
-    // Show confirmation alert
-    Alert.alert(
-      'Story Details Collected!',
-      'Check the console for the collected story generation details.',
-      [
-        {
-          text: 'OK',
-          onPress: () => {
-            // Navigate back to home or to a story generation screen
-            navigation.navigate('HomeScreen');
-          }
-        }
-      ]
-    );
+    // Navigate to Generate Story Screen with the collected details
+    navigation.navigate('GenerateStoryScreen', { storyDetails });
   };
 
   const isFinishDisabled = useChildName === 'Yes' && childName.trim() === '';

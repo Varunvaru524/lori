@@ -36,8 +36,27 @@ async function callAiModel(prompt) {
 }
 
 function createStoryPrompt(userDetails) {
-  const { childAge, country, language, moral, interests, childName } = userDetails;
-  return `Write a short bedtime story for a ${childAge}-year-old child from ${country}. The story should be in ${language} and based on the moral: ${moral} and interests: ${interests}. If personalization = yes, include the child’s name: ${childName}. Keep the tone warm, simple, and suitable for toddlers. Length: 3–5 minutes of reading.`
+  const { language, morals, interests, childName, personalization } = userDetails;
+  
+  let prompt = `Write a short bedtime story in ${language} that teaches the following values: ${morals}. 
+The story should incorporate these interests: ${interests}. `;
+
+  if (personalization === 'yes' && childName) {
+    prompt += `The main character should be named ${childName}. `;
+  } else {
+    prompt += `Use a generic character name that children can relate to. `;
+  }
+
+  prompt += `Keep the tone warm, gentle, and suitable for bedtime. 
+Length: 3-5 minutes of reading (approximately 300-500 words).
+Always format in **Markdown** with:
+- A title (# heading)
+- Section breaks (## headings) 
+- Use bold for emphasis
+- Keep paragraphs short and engaging
+- End with a peaceful conclusion perfect for bedtime`;
+
+  return prompt;
 }
 
 
