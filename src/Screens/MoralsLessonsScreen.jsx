@@ -28,10 +28,21 @@ function MoralsLessonsScreen({ navigation, route }) {
   };
 
   const handleNext = () => {
-    navigation.navigate('InterestsScreen', {
-      ...route.params,
-      moralsLessons: selectedMorals
-    });
+    // Check if we're in story generation mode or onboarding mode
+    const isStoryGeneration = route.params?.isStoryGeneration;
+    
+    if (isStoryGeneration) {
+      navigation.navigate('InterestsScreen', {
+        ...route.params,
+        moralsLessons: selectedMorals,
+        isStoryGeneration: true
+      });
+    } else {
+      navigation.navigate('InterestsScreen', {
+        ...route.params,
+        moralsLessons: selectedMorals
+      });
+    }
   };
 
   return (

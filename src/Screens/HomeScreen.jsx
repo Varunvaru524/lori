@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import AppLayout from '../Components/AppLayout';
@@ -8,6 +8,7 @@ import fonts from '../Utilities/fonts';
 import { storiesCategories } from '../Utilities/appConstants';
 import stories from '../content/stories';
 import AppButton from '../Components/AppButton';
+import { clearAllAsyncStorage } from '../libraries/asyncStorage';
 
 function HomeScreen({ navigation }) {
 
@@ -35,7 +36,7 @@ function HomeScreen({ navigation }) {
           />
           <Text style={styles.appName}>Bedtime Stories</Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => clearAllAsyncStorage()}>
           <View style={styles.avatar}>
             <Text style={styles.avatarText}>U</Text>
           </View>
@@ -79,17 +80,17 @@ function HomeScreen({ navigation }) {
             </View>
           );
         })}
-        
+
         {/* Bottom padding to ensure content doesn't hide behind button */}
         <View style={styles.bottomPadding} />
       </ScrollView>
 
       {/* Fixed Button at bottom */}
       <View style={styles.buttonContainer}>
-        <AppButton 
-          title='Generate Story' 
-          onPress={() => navigation.navigate('GenerateStoryScreen')} 
-          style={styles.button} 
+        <AppButton
+          title='Generate Story'
+          onPress={() => navigation.navigate('MoralsLessonsScreen', { isStoryGeneration: true })}
+          style={styles.button}
         />
       </View>
     </View>
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.neutral98,
     paddingHorizontal: 24,
     paddingVertical: 16,
-    paddingBottom:34,
+    paddingBottom: 34,
     borderTopWidth: 1,
     borderTopColor: colors.neutral90,
     elevation: 8,

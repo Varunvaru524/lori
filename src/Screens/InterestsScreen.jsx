@@ -30,10 +30,21 @@ function InterestsScreen({ navigation, route }) {
   };
 
   const handleNext = () => {
-    navigation.navigate('NotificationTimeScreen', {
-      ...route.params,
-      interests: selectedInterests
-    });
+    // Check if we're in story generation mode or onboarding mode
+    const isStoryGeneration = route.params?.isStoryGeneration;
+    
+    if (isStoryGeneration) {
+      navigation.navigate('PreferredLanguageScreen', {
+        ...route.params,
+        interests: selectedInterests,
+        isStoryGeneration: true
+      });
+    } else {
+      navigation.navigate('NotificationTimeScreen', {
+        ...route.params,
+        interests: selectedInterests
+      });
+    }
   };
 
   return (

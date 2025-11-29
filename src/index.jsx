@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import GettingStarted from './Screens/GettingStarted';
-import { Platform } from 'react-native';
+import { Platform} from 'react-native';
 import fonts from './Utilities/fonts';
 import StoriesScreen from './Screens/StoriesScreen';
 import HomeScreen from './Screens/HomeScreen';
@@ -13,16 +13,30 @@ import ChildGenderScreen from './Screens/ChildGenderScreen';
 import MoralsLessonsScreen from './Screens/MoralsLessonsScreen';
 import InterestsScreen from './Screens/InterestsScreen';
 import NotificationTimeScreen from './Screens/NotificationTimeScreen';
+import PersonalizeNameScreen from './Screens/PersonalizeNameScreen';
+import { getUserDetails } from './libraries/asyncStorage';
 
 const Stack = createStackNavigator();
 
 
 function Index() {
 
+  const [initialRouteName, setInitialRouteName] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const userDetails = await getUserDetails();
+      if (userDetails) setInitialRouteName('HomeScreen');
+      else setInitialRouteName('GettingStarted');
+    })();
+  }, []);
+
+  // Wait for initial route to be determined
+  if (!initialRouteName) { return null }
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={'GettingStarted'}
+        initialRouteName={initialRouteName}
         screenOptions={{
           cardShadowEnabled: true,
           headerTitleAlign: 'left',
@@ -65,6 +79,11 @@ function Index() {
           name='NotificationTimeScreen'
           component={NotificationTimeScreen}
           options={{ title: 'Setup' }}
+        />
+        <Stack.Screen
+          name='PersonalizeNameScreen'
+          component={PersonalizeNameScreen}
+          options={{ title: 'Generate Story' }}
         />
         <Stack.Screen
           name='HomeScreen'

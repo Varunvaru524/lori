@@ -9,8 +9,12 @@ const setUserDetails = async (userDetails) => {
   await AsyncStorage.setItem('userDetails', JSON.stringify(userDetails))
 }
 
+const clearAllAsyncStorage = async () => {
+  await AsyncStorage.clear()
+}
 
 export {
   getUserDetails,
-  setUserDetails
+  setUserDetails,
+  clearAllAsyncStorage
 }

@@ -12,10 +12,20 @@ function PreferredLanguageScreen({ navigation, route }) {
   const [selectedLanguage, setSelectedLanguage] = useState('English');
 
   const handleNext = () => {
-    navigation.navigate('ChildAgeScreen', {
-      ...route.params,
-      preferredLanguage: selectedLanguage
-    });
+    // Check if we're in story generation mode or onboarding mode
+    const isStoryGeneration = route.params?.isStoryGeneration;
+    
+    if (isStoryGeneration) {
+      navigation.navigate('PersonalizeNameScreen', {
+        ...route.params,
+        preferredLanguage: selectedLanguage
+      });
+    } else {
+      navigation.navigate('ChildAgeScreen', {
+        ...route.params,
+        preferredLanguage: selectedLanguage
+      });
+    }
   };
 
   return (
