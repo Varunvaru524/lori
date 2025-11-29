@@ -3,6 +3,7 @@
 # dependencies
 node_modules/
 /REFERENCE
+tsconfig.json
 
 # Expo
 .expo/

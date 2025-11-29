@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import AppLayout from '../Components/AppLayout';
 import StoryCard from '../Components/StoryCard';
 import colors from '../Utilities/colors';
@@ -29,26 +31,29 @@ function HomeScreen({ navigation }) {
       {/* Header - Fixed at top */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
-          <Image
-            source={require('../../assets/icon.png')}
-            style={styles.appLogo}
-            contentFit="contain"
-          />
-          <Text style={styles.appName}>Bedtime Stories</Text>
-        </View>
-        <TouchableOpacity onPress={() => clearAllAsyncStorage()}>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>U</Text>
+          <LinearGradient
+            colors={['#93C5FD', '#818CF8']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.logoGradient}
+          >
+            <MaterialCommunityIcons name="weather-night" size={24} color="#FFFFFF" />
+          </LinearGradient>
+          <View>
+            <Text style={styles.appName}>DreamTales</Text>
           </View>
+        </View>
+        <TouchableOpacity onPress={() => clearAllAsyncStorage()} style={styles.profileButton}>
+          <MaterialCommunityIcons name="account" size={20} color="#4F46E5" />
         </TouchableOpacity>
       </View>
 
       {/* Scrollable Content */}
       <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        {/* Story of the Day Section */}
+        {/* Featured Story Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Story of the Day</Text>
-          <StoryOfTheDayCard
+          <Text style={styles.sectionTitle}>Tonight's story ✨</Text>
+          <FeaturedStoryCard
             story={storyOfTheDay}
             onPress={() => handleStoryPress(storyOfTheDay)}
           />
@@ -59,9 +64,19 @@ function HomeScreen({ navigation }) {
           const categoryStories = getStoriesByCategory(category);
           if (categoryStories.length === 0) return null;
 
+          // Map category to emoji
+          const categoryEmojis = {
+            'Favourites': '💕',
+            'Honesty': '🤝',
+            'Bravery': '🦁',
+            'Friendship': '🌈',
+            'Kindness': '💕',
+            'Adventure': '🗺️'
+          };
+
           return (
             <View key={index} style={styles.section}>
-              <Text style={styles.sectionTitle}>{category}</Text>
+              <Text style={styles.sectionTitle}>{category} {categoryEmojis[category] || ''}</Text>
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -85,35 +100,60 @@ function HomeScreen({ navigation }) {
         <View style={styles.bottomPadding} />
       </ScrollView>
 
-      {/* Fixed Button at bottom */}
-      <View style={styles.buttonContainer}>
-        <AppButton
-          title='Generate Story'
+      {/* Floating Generate Button */}
+      <View style={styles.floatingButtonContainer}>
+        <TouchableOpacity
           onPress={() => navigation.navigate('MoralsLessonsScreen', { isStoryGeneration: true })}
-          style={styles.button}
-        />
+          style={styles.floatingButton}
+        >
+          <MaterialCommunityIcons name="sparkles" size={16} color="#1F2937" />
+          <Text style={styles.floatingButtonText}>Generate Story</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 }
 
-// Story of the Day Card Component
-function StoryOfTheDayCard({ story, onPress }) {
+// Featured Story Card Component
+function FeaturedStoryCard({ story, onPress }) {
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={storyOfDayStyles.container}>
-        <Image
-          source={{ uri: story.image }}
-          style={storyOfDayStyles.image}
-          contentFit="cover"
-        />
-        <View style={storyOfDayStyles.content}>
-          <Text style={storyOfDayStyles.title}>{story.title}</Text>
-          <Text style={storyOfDayStyles.description} numberOfLines={2}>
-            {story.description}
-          </Text>
+    <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
+      <LinearGradient
+        colors={['rgba(251, 207, 232, 0.6)', 'rgba(219, 234, 254, 0.6)']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={featuredStoryStyles.container}
+      >
+        {/* Story Thumbnail */}
+        <View style={featuredStoryStyles.thumbnailContainer}>
+          <Image
+            source={{ uri: story.image }}
+            style={featuredStoryStyles.thumbnail}
+            contentFit="cover"
+          />
         </View>
-      </View>
+
+        {/* Story Details */}
+        <View style={featuredStoryStyles.content}>
+          <View style={featuredStoryStyles.textContent}>
+            <Text style={featuredStoryStyles.title}>{story.title}</Text>
+            <Text style={featuredStoryStyles.description} numberOfLines={2}>
+              {story.description}
+            </Text>
+          </View>
+
+          <View style={featuredStoryStyles.metadata}>
+            <View style={featuredStoryStyles.metadataItem}>
+              <MaterialCommunityIcons name="clock-outline" size={16} color="#4F46E5" />
+              <Text style={featuredStoryStyles.metadataText}>8 min</Text>
+            </View>
+            <View style={featuredStoryStyles.metadataItem}>
+              <MaterialCommunityIcons name="sparkles" size={16} color="#EC4899" />
+              <Text style={featuredStoryStyles.metadataTextSmall}>Fantasy</Text>
+            </View>
+          </View>
+        </View>
+      </LinearGradient>
     </TouchableOpacity>
   );
 }
@@ -122,18 +162,17 @@ function StoryOfTheDayCard({ story, onPress }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.neutral98
+    backgroundColor: '#FFF9F5'
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 24,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.neutral90,
+    paddingHorizontal: 20,
+    paddingTop: 24,
+    paddingBottom: 16,
     marginTop: 40,
-    backgroundColor: colors.neutral98,
+    backgroundColor: 'rgba(255, 249, 245, 0.95)',
     zIndex: 1
   },
   scrollContent: {
@@ -144,90 +183,156 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12
   },
-  appLogo: {
-    width: 40,
-    height: 40
+  logoGradient: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#4F46E5',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8
   },
   appName: {
-    ...fonts.titleLarge,
-    color: colors.neutral20
+    fontSize: 20,
+    fontWeight: '400',
+    color: '#312E81'
   },
-  avatar: {
+  profileButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.primary,
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
     justifyContent: 'center',
-    alignItems: 'center'
-  },
-  avatarText: {
-    ...fonts.titleMedium,
-    color: colors.white
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1
   },
   section: {
-    marginTop: 24,
+    marginTop: 32
   },
   sectionTitle: {
-    ...fonts.headlineSmall,
-    color: colors.neutral20,
+    fontSize: 18,
+    fontWeight: '400',
+    color: '#312E81',
     marginBottom: 16,
-    marginLeft: 24
+    marginLeft: 20
   },
   horizontalScroll: {
-    paddingHorizontal: 24
+    paddingHorizontal: 20
   },
   cardMargin: {
-    marginRight: 16
+    marginRight: 12
   },
   bottomPadding: {
-    height: 100
+    height: 120
   },
-  buttonContainer: {
-    backgroundColor: colors.neutral98,
+  floatingButtonContainer: {
+    position: 'absolute',
+    bottom: 32,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    zIndex: 50
+  },
+  floatingButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
     paddingHorizontal: 24,
-    paddingVertical: 16,
-    paddingBottom: 34,
-    borderTopWidth: 1,
-    borderTopColor: colors.neutral90,
-    elevation: 8,
-    shadowColor: colors.black,
-    shadowOffset: { width: 0, height: -2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8
+    paddingVertical: 12,
+    borderRadius: 9999,
+    gap: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.3,
+    shadowRadius: 16,
+    elevation: 12,
+    borderWidth: 1,
+    borderColor: '#E5E7EB'
   },
-  button: {
-    margin: 0
+  floatingButtonText: {
+    fontSize: 18,
+    color: '#1F2937',
+    fontWeight: '400'
   }
 });
 
-const storyOfDayStyles = StyleSheet.create({
+const featuredStoryStyles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
+    marginHorizontal: 20,
+    borderRadius: 24,
+    padding: 16,
+    flexDirection: 'row',
+    gap: 16,
+    shadowColor: '#4F46E5',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.5)'
+  },
+  thumbnailContainer: {
+    width: 96,
+    height: 128,
     borderRadius: 16,
     overflow: 'hidden',
-    elevation: 2,
-    shadowColor: colors.black,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    marginHorizontal: 24
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+    borderWidth: 2,
+    borderColor: 'rgba(255, 255, 255, 0.5)'
   },
-  image: {
+  thumbnail: {
     width: '100%',
-    aspectRatio: 1 / 1,
+    height: '100%',
     backgroundColor: colors.neutral95
   },
   content: {
-    padding: 16,
+    flex: 1,
+    justifyContent: 'space-between',
+    paddingVertical: 4
+  },
+  textContent: {
     gap: 8
   },
   title: {
-    ...fonts.headLineXs,
-    color: colors.neutral20
+    fontSize: 18,
+    fontWeight: '400',
+    color: '#312E81',
+    marginBottom: 8
   },
   description: {
-    ...fonts.bodyMedium,
-    color: colors.neutral40
+    fontSize: 14,
+    color: '#4F46E5',
+    lineHeight: 20,
+    marginBottom: 12
+  },
+  metadata: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16
+  },
+  metadataItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4
+  },
+  metadataText: {
+    fontSize: 14,
+    color: '#4F46E5'
+  },
+  metadataTextSmall: {
+    fontSize: 12,
+    color: '#EC4899'
   }
 });
 

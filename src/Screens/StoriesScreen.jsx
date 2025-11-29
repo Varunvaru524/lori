@@ -1,66 +1,154 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
 import { Image } from 'expo-image';
 import PagerView from 'react-native-pager-view';
 import colors from '../Utilities/colors';
 import fonts from '../Utilities/fonts';
 import AppLayout from '../Components/AppLayout';
-import { MaterialCommunityIcons } from '@expo/vector-icons'
-
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const IMAGE_HEIGHT = (SCREEN_WIDTH * 5) / 4; // 4:5 ratio
 
 function StoriesScreen({ navigation, route }) {
   const [currentPage, setCurrentPage] = useState(0);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const pagerRef = useRef(null);
   
   // Get story from navigation params or use default
   const story = route?.params?.story || defaultStory;
+  const totalPages = story.pages.length;
 
   const handlePageSelected = (e) => {
     setCurrentPage(e.nativeEvent.position);
   };
 
+  const handlePrevious = () => {
+    if (currentPage > 0) {
+      pagerRef.current?.setPage(currentPage - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages - 1) {
+      pagerRef.current?.setPage(currentPage + 1);
+    }
+  };
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  };
+
   return (
-    <AppLayout>
+    <AppLayout style={styles.appLayout}>
       <View style={styles.container}>
-        {/* Header with Page Counter and Close Button */}
-        <View style={styles.pageCounterContainer}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialCommunityIcons
-              name="close"
-              size={24}
-              color={colors.neutral40}
-              style={styles.closeIcon}
+        {/* Header */}
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerButton}>
+            <MaterialCommunityIcons name="arrow-left" size={20} color="#4F46E5" />
+          </TouchableOpacity>
+
+          <Text style={styles.pageCounter}>
+            {currentPage + 1} / {totalPages}
+          </Text>
+
+          <TouchableOpacity onPress={toggleFavorite} style={styles.headerButton}>
+            <MaterialCommunityIcons 
+              name={isFavorite ? "heart" : "heart-outline"} 
+              size={20} 
+              color={isFavorite ? "#EC4899" : "#4F46E5"} 
             />
           </TouchableOpacity>
-          <Text style={styles.pageCounter}>
-            Page {currentPage + 1}/{story.pages.length}
-          </Text>
         </View>
 
-        {/* Pager View */}
-        <PagerView
-          style={styles.pagerView}
-          initialPage={0}
-          onPageSelected={handlePageSelected}
+        {/* Story Content */}
+        <ScrollView 
+          style={styles.scrollContent} 
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContentContainer}
         >
-          {story.pages.map((page) => (
-            <View key={page.id} style={styles.pageContainer}>
-              {/* Image */}
-              <Image
-                source={{ uri: page.image }}
-                style={styles.image}
-                contentFit="cover"
-              />
+          {/* Story Title */}
+          <View style={styles.titleContainer}>
+            <Text style={styles.storyTitle}>{story.title}</Text>
+          </View>
 
-              {/* Content */}
-              <View style={styles.contentContainer}>
-                <Text style={styles.contentText}>{page.content}</Text>
-              </View>
+          {/* Story Card Container */}
+          <View style={styles.storyCardWrapper}>
+            <PagerView
+              ref={pagerRef}
+              style={styles.pagerView}
+              initialPage={0}
+              onPageSelected={handlePageSelected}
+            >
+              {story.pages.map((page, index) => (
+                <View key={page.id} style={styles.pageContainer}>
+                  <View style={styles.storyCard}>
+                    {/* Story Illustration */}
+                    <View style={styles.imageContainer}>
+                      <Image
+                        source={{ uri: page.image }}
+                        style={styles.image}
+                        contentFit="cover"
+                      />
+                    </View>
+
+                    {/* Story Text */}
+                    <View style={styles.textContainer}>
+                      <Text style={styles.storyText}>{page.content}</Text>
+                    </View>
+                  </View>
+                </View>
+              ))}
+            </PagerView>
+          </View>
+
+          {/* Navigation Controls */}
+          <View style={styles.navigationContainer}>
+            {/* Previous Button */}
+            <TouchableOpacity
+              onPress={handlePrevious}
+              disabled={currentPage === 0}
+              style={[
+                styles.navButton,
+                currentPage === 0 && styles.navButtonDisabled
+              ]}
+            >
+              <MaterialCommunityIcons 
+                name="chevron-left" 
+                size={24} 
+                color={currentPage === 0 ? '#9CA3AF' : '#4F46E5'} 
+              />
+            </TouchableOpacity>
+
+            {/* Page Indicators */}
+            <View style={styles.pageIndicators}>
+              {story.pages.map((_, index) => (
+                <View
+                  key={index}
+                  style={[
+                    styles.pageIndicator,
+                    index === currentPage ? styles.pageIndicatorActive : styles.pageIndicatorInactive
+                  ]}
+                />
+              ))}
             </View>
-          ))}
-        </PagerView>
+
+            {/* Next Button */}
+            <TouchableOpacity
+              onPress={handleNext}
+              disabled={currentPage === totalPages - 1}
+              style={[
+                styles.navButton,
+                currentPage === totalPages - 1 && styles.navButtonDisabled
+              ]}
+            >
+              <MaterialCommunityIcons 
+                name="chevron-right" 
+                size={24} 
+                color={currentPage === totalPages - 1 ? '#9CA3AF' : '#4F46E5'} 
+              />
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </View>
     </AppLayout>
   );
@@ -68,46 +156,139 @@ function StoriesScreen({ navigation, route }) {
 
 // Styles
 const styles = StyleSheet.create({
+  appLayout: {
+    backgroundColor: '#FFF9F5'
+  },
   container: {
     flex: 1,
-    backgroundColor: colors.neutral98
+    backgroundColor: '#FFF9F5'
   },
-  pageCounterContainer: {
+  header: {
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingTop: 16,
+    paddingBottom: 16,
+    backgroundColor: 'rgba(255, 249, 245, 0.95)',
+    zIndex: 10
+  },
+  headerButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
     alignItems: 'center',
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    alignItems: 'center',
-    backgroundColor: colors.neutral98,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.neutral90
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1
   },
   pageCounter: {
-    ...fonts.titleMedium,
-    color: colors.neutral40
+    fontSize: 14,
+    color: '#4F46E5',
+    fontWeight: '500'
+  },
+  scrollContent: {
+    flex: 1
+  },
+  scrollContentContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 32
+  },
+  titleContainer: {
+    marginBottom: 16,
+    marginTop: 8
+  },
+  storyTitle: {
+    fontSize: 24,
+    fontWeight: '400',
+    color: '#312E81',
+    textAlign: 'center'
+  },
+  storyCardWrapper: {
+    height: SCREEN_WIDTH * 1.4, // Approximate height for card
+    marginBottom: 20
   },
   pagerView: {
     flex: 1
   },
   pageContainer: {
-    flex: 1
+    flex: 1,
+    justifyContent: 'center'
   },
-  image: {
-    width: SCREEN_WIDTH,
-    height: IMAGE_HEIGHT,
+  storyCard: {
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
+    borderRadius: 24,
+    overflow: 'hidden',
+    shadowColor: '#4F46E5',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.5)'
+  },
+  imageContainer: {
+    width: '100%',
+    aspectRatio: 4 / 3,
     backgroundColor: colors.neutral95
   },
-  contentContainer: {
-    flex: 1,
-    paddingHorizontal: 24,
-    paddingVertical: 20,
-    backgroundColor: colors.neutral98
+  image: {
+    width: '100%',
+    height: '100%'
   },
-  contentText: {
-    ...fonts.bodyLarge,
-    color: colors.neutral20,
-    lineHeight: 28
+  textContainer: {
+    padding: 24,
+    paddingBottom: 32
+  },
+  storyText: {
+    fontSize: 20,
+    lineHeight: 32,
+    color: '#4F46E5',
+    textAlign: 'center',
+    fontWeight: '400'
+  },
+  navigationContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 20
+  },
+  navButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 4
+  },
+  navButtonDisabled: {
+    backgroundColor: '#E5E7EB'
+  },
+  pageIndicators: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8
+  },
+  pageIndicator: {
+    height: 8,
+    borderRadius: 4
+  },
+  pageIndicatorActive: {
+    width: 32,
+    backgroundColor: '#4F46E5'
+  },
+  pageIndicatorInactive: {
+    width: 8,
+    backgroundColor: '#C7D2FE'
   }
 });
 
