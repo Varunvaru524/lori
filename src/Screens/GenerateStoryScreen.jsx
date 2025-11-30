@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated, Easing } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import AppLayout from '../Components/AppLayout';
 import AppButton from '../Components/AppButton';
 import TypeWriter from '../Components/TypeWriter';
-import { callAiModel, createStoryPrompt } from '../Utilities/utilityFunctions';
+import { callAiModel, createStoryPrompt, NewAiChatIcon } from '../Utilities/utilityFunctions';
 import colors from '../Utilities/colors';
 import fonts from '../Utilities/fonts';
 
@@ -14,7 +15,72 @@ function GenerateStoryScreen({ navigation, route }) {
   const [isTyping, setIsTyping] = useState(false);
   const [error, setError] = useState(null);
 
+  // Animation values
+  const pulseAnim = useRef(new Animated.Value(1)).current;
+  const spinAnim = useRef(new Animated.Value(0)).current;
+  const bounceAnim1 = useRef(new Animated.Value(0)).current;
+  const bounceAnim2 = useRef(new Animated.Value(0)).current;
+  const bounceAnim3 = useRef(new Animated.Value(0)).current;
+
   const storyDetails = route.params?.storyDetails || {};
+
+  // Start animations when loading
+  useEffect(() => {
+    if (isLoading) {
+      // Pulse animation
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(pulseAnim, {
+            toValue: 1.1,
+            duration: 1000,
+            easing: Easing.inOut(Easing.ease),
+            useNativeDriver: true
+          }),
+          Animated.timing(pulseAnim, {
+            toValue: 1,
+            duration: 1000,
+            easing: Easing.inOut(Easing.ease),
+            useNativeDriver: true
+          })
+        ])
+      ).start();
+
+      // Spin animation
+      Animated.loop(
+        Animated.timing(spinAnim, {
+          toValue: 1,
+          duration: 2000,
+          easing: Easing.linear,
+          useNativeDriver: true
+        })
+      ).start();
+
+      // Bounce animations with delays
+      const createBounceAnimation = (animValue, delay) => {
+        return Animated.loop(
+          Animated.sequence([
+            Animated.delay(delay),
+            Animated.timing(animValue, {
+              toValue: -10,
+              duration: 400,
+              easing: Easing.out(Easing.ease),
+              useNativeDriver: true
+            }),
+            Animated.timing(animValue, {
+              toValue: 0,
+              duration: 400,
+              easing: Easing.in(Easing.ease),
+              useNativeDriver: true
+            })
+          ])
+        );
+      };
+
+      createBounceAnimation(bounceAnim1, 0).start();
+      createBounceAnimation(bounceAnim2, 200).start();
+      createBounceAnimation(bounceAnim3, 400).start();
+    }
+  }, [isLoading]);
 
   const generateStory = async () => {
     setIsLoading(true);
@@ -81,8 +147,77 @@ function GenerateStoryScreen({ navigation, route }) {
         >
           {isLoading && (
             <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color={colors.primary} />
-              <Text style={styles.loadingText}>Creating your magical story...</Text>
+              {/* Animated Icon Container */}
+              <View style={styles.animationWrapper}>
+                {/* Spinning Border */}
+                <Animated.View
+                  style={[
+                    styles.spinningBorder,
+                    {
+                      transform: [
+                        {
+                          rotate: spinAnim.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: ['0deg', '360deg']
+                          })
+                        }
+                      ]
+                    }
+                  ]}
+                >
+                  <View style={styles.spinningBorderInner} />
+                </Animated.View>
+
+                {/* Pulsing Gradient Circle with Icon */}
+                <Animated.View
+                  style={[
+                    styles.pulsingCircle,
+                    {
+                      transform: [{ scale: pulseAnim }]
+                    }
+                  ]}
+                >
+                  <LinearGradient
+                    colors={['#F472B6', '#4F46E5']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={styles.gradientCircle}
+                  >
+                    <NewAiChatIcon color="#FFFFFF" size={46} />
+                  </LinearGradient>
+                </Animated.View>
+              </View>
+
+              {/* Loading Text */}
+              <Text style={styles.loadingTitle}>Creating your magical story...</Text>
+              <Text style={styles.loadingSubtitle}>
+                Our storyteller is weaving together the perfect bedtime tale just for you!
+              </Text>
+
+              {/* Bouncing Dots */}
+              <View style={styles.bouncingDotsContainer}>
+                <Animated.View
+                  style={[
+                    styles.bouncingDot,
+                    styles.bouncingDotIndigo,
+                    { transform: [{ translateY: bounceAnim1 }] }
+                  ]}
+                />
+                <Animated.View
+                  style={[
+                    styles.bouncingDot,
+                    styles.bouncingDotPink,
+                    { transform: [{ translateY: bounceAnim2 }] }
+                  ]}
+                />
+                <Animated.View
+                  style={[
+                    styles.bouncingDot,
+                    styles.bouncingDotIndigo,
+                    { transform: [{ translateY: bounceAnim3 }] }
+                  ]}
+                />
+              </View>
             </View>
           )}
 
@@ -130,8 +265,8 @@ function GenerateStoryScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.neutral98,
-    marginTop:30
+    backgroundColor: '#FFF9F5',
+    marginTop: 30
   },
   closeButton: {
     position: 'absolute',
@@ -141,7 +276,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.white,
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 2,
@@ -161,13 +296,76 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 100
+    paddingVertical: 100,
+    paddingHorizontal: 20
   },
-  loadingText: {
-    ...fonts.bodyLarge,
-    color: colors.neutral40,
-    marginTop: 16,
+  animationWrapper: {
+    width: 128,
+    height: 128,
+    marginBottom: 32,
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  spinningBorder: {
+    position: 'absolute',
+    width: 128,
+    height: 128,
+    borderRadius: 64,
+    borderWidth: 4,
+    borderColor: 'transparent',
+    borderTopColor: '#4F46E5',
+    borderRightColor: '#C7D2FE'
+  },
+  spinningBorderInner: {
+    width: '100%',
+    height: '100%'
+  },
+  pulsingCircle: {
+    width: 96,
+    height: 96,
+    borderRadius: 48,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  gradientCircle: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 48,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  loadingTitle: {
+    fontSize: 24,
+    fontWeight: '400',
+    color: '#312E81',
+    marginBottom: 16,
     textAlign: 'center'
+  },
+  loadingSubtitle: {
+    fontSize: 16,
+    color: '#4F46E5',
+    textAlign: 'center',
+    lineHeight: 24,
+    paddingHorizontal: 20
+  },
+  bouncingDotsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 32,
+    gap: 8
+  },
+  bouncingDot: {
+    width: 12,
+    height: 12,
+    borderRadius: 6
+  },
+  bouncingDotIndigo: {
+    backgroundColor: '#818CF8'
+  },
+  bouncingDotPink: {
+    backgroundColor: '#F472B6'
   },
   errorContainer: {
     flex: 1,
@@ -193,12 +391,12 @@ const styles = StyleSheet.create({
     height: 100
   },
   buttonContainer: {
-    backgroundColor: colors.neutral98,
+    backgroundColor: '#FFF9F5',
     paddingHorizontal: 24,
     paddingVertical: 16,
     paddingBottom: 34,
     borderTopWidth: 1,
-    borderTopColor: colors.neutral90,
+    borderTopColor: 'rgba(255, 255, 255, 0.6)',
     elevation: 8,
     shadowColor: colors.black,
     shadowOffset: { width: 0, height: -2 },

@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AppLayout from '../Components/AppLayout';
+import { NewAiChatIcon } from '../Utilities/utilityFunctions';
 
 function SelectNameScreen({ navigation, route }) {
   const [personalize, setPersonalize] = useState(null);
-  
+
   // Check if we're in story generation mode
   const isStoryGeneration = route.params?.isStoryGeneration;
 
@@ -85,11 +86,7 @@ function SelectNameScreen({ navigation, route }) {
           >
             {isStoryGeneration ? (
               <>
-                <MaterialCommunityIcons 
-                  name="sparkles" 
-                  size={20} 
-                  color={personalize === null ? '#9CA3AF' : '#FFFFFF'} 
-                />
+                <NewAiChatIcon color="#FFFFFF" size={20} />
                 <Text style={[styles.buttonText, personalize === null && styles.buttonTextDisabled]}>
                   Generate Story
                 </Text>
@@ -99,10 +96,10 @@ function SelectNameScreen({ navigation, route }) {
                 <Text style={[styles.buttonText, personalize === null && styles.buttonTextDisabled]}>
                   Continue
                 </Text>
-                <MaterialCommunityIcons 
-                  name="arrow-right" 
-                  size={20} 
-                  color={personalize === null ? '#9CA3AF' : '#FFFFFF'} 
+                <MaterialCommunityIcons
+                  name="arrow-right"
+                  size={20}
+                  color={personalize === null ? '#9CA3AF' : '#FFFFFF'}
                 />
               </>
             )}
