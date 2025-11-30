@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import GettingStarted from './Screens/GettingStarted';
-import { Platform} from 'react-native';
+import { Platform } from 'react-native';
 import fonts from './Utilities/fonts';
 import StoriesScreen from './Screens/StoriesScreen';
 import HomeScreen from './Screens/HomeScreen';
@@ -15,6 +15,7 @@ import InterestsScreen from './Screens/InterestsScreen';
 import NotificationTimeScreen from './Screens/NotificationTimeScreen';
 import PersonalizeNameScreen from './Screens/PersonalizeNameScreen';
 import { getUserDetails } from './libraries/asyncStorage';
+import SelectNameScreen from './Screens/SelectNameScreen';
 
 const Stack = createStackNavigator();
 
@@ -84,6 +85,11 @@ function Index() {
           name='PersonalizeNameScreen'
           component={PersonalizeNameScreen}
           options={{ title: 'Generate Story', headerShown: false }}
+        />
+        <Stack.Screen
+          name='SelectNameScreen'
+          component={SelectNameScreen}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name='HomeScreen'

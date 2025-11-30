@@ -12,15 +12,16 @@ const languages = [
 
 function PreferredLanguageScreen({ navigation, route }) {
   const [selectedLanguage, setSelectedLanguage] = useState('English');
+  
+  // Check if we're in story generation mode or onboarding mode
+  const isStoryGeneration = route.params?.isStoryGeneration;
 
   const handleNext = () => {
-    // Check if we're in story generation mode or onboarding mode
-    const isStoryGeneration = route.params?.isStoryGeneration;
-    
     if (isStoryGeneration) {
-      navigation.navigate('PersonalizeNameScreen', {
+      navigation.navigate('SelectNameScreen', {
         ...route.params,
-        preferredLanguage: selectedLanguage
+        preferredLanguage: selectedLanguage,
+        isStoryGeneration: true
       });
     } else {
       navigation.navigate('ChildAgeScreen', {
@@ -41,14 +42,16 @@ function PreferredLanguageScreen({ navigation, route }) {
           <TouchableOpacity onPress={handleBack} style={styles.backButton}>
             <MaterialCommunityIcons name="arrow-left" size={20} color="#4F46E5" />
           </TouchableOpacity>
-          <Text style={styles.stepIndicator}>Step 1 of 7</Text>
+          {!isStoryGeneration && <Text style={styles.stepIndicator}>Step 1 of 7</Text>}
           <View style={styles.spacer} />
         </View>
 
-        {/* Progress Bar */}
-        <View style={styles.progressBarContainer}>
-          <View style={[styles.progressBar, { width: `${(1 / 7) * 100}%` }]} />
-        </View>
+        {/* Progress Bar - Only show in onboarding */}
+        {!isStoryGeneration && (
+          <View style={styles.progressBarContainer}>
+            <View style={[styles.progressBar, { width: `${(1 / 7) * 100}%` }]} />
+          </View>
+        )}
 
         {/* Content */}
         <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>

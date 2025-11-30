@@ -17,6 +17,9 @@ const moralsOptions = [
 
 function MoralsLessonsScreen({ navigation, route }) {
   const [selectedMorals, setSelectedMorals] = useState([]);
+  
+  // Check if we're in story generation mode or onboarding mode
+  const isStoryGeneration = route.params?.isStoryGeneration;
 
   const toggleMoral = (moralId) => {
     if (selectedMorals.includes(moralId)) {
@@ -27,9 +30,6 @@ function MoralsLessonsScreen({ navigation, route }) {
   };
 
   const handleNext = () => {
-    // Check if we're in story generation mode or onboarding mode
-    const isStoryGeneration = route.params?.isStoryGeneration;
-
     if (isStoryGeneration) {
       navigation.navigate('InterestsScreen', {
         ...route.params,
@@ -55,14 +55,16 @@ function MoralsLessonsScreen({ navigation, route }) {
         <TouchableOpacity onPress={handleBack} style={styles.backButton}>
           <MaterialCommunityIcons name="arrow-left" size={20} color="#4F46E5" />
         </TouchableOpacity>
-        <Text style={styles.stepIndicator}>Step 5 of 7</Text>
+        {!isStoryGeneration && <Text style={styles.stepIndicator}>Step 5 of 7</Text>}
         <View style={styles.spacer} />
       </View>
 
-      {/* Progress Bar */}
-      <View style={styles.progressBarContainer}>
-        <View style={[styles.progressBar, { width: `${(5 / 7) * 100}%` }]} />
-      </View>
+      {/* Progress Bar - Only show in onboarding */}
+      {!isStoryGeneration && (
+        <View style={styles.progressBarContainer}>
+          <View style={[styles.progressBar, { width: `${(5 / 7) * 100}%` }]} />
+        </View>
+      )}
 
       {/* Content */}
       <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>
