@@ -24,7 +24,7 @@ function HomeScreen({ navigation }) {
         const userDetails = await getUserDetails();
         const preferredLanguage = userDetails?.preferredLanguage || 'English';
         setUserLanguage(preferredLanguage);
-        
+
         // Filter stories based on user's language
         const storiesInUserLanguage = stories.filter(
           story => story.language === preferredLanguage
@@ -43,6 +43,11 @@ function HomeScreen({ navigation }) {
 
   // Get story of the day (first story in filtered list)
   const storyOfTheDay = filteredStories[0] || stories[0];
+
+  // Get favorite stories (from filtered stories)
+  const getFavoriteStories = () => {
+    return filteredStories.filter(story => story.isFavorite === true);
+  };
 
   // Group stories by category (from filtered stories)
   const getStoriesByCategory = (category) => {
@@ -67,7 +72,7 @@ function HomeScreen({ navigation }) {
             <MaterialCommunityIcons name="weather-night" size={24} color="#FFFFFF" />
           </LinearGradient>
           <View>
-            <Text style={styles.appName}>DreamTales</Text>
+            <Text style={styles.appName}>Lori</Text>
           </View>
         </View>
         <TouchableOpacity onPress={() => clearAllAsyncStorage()} style={styles.profileButton}>
@@ -79,12 +84,34 @@ function HomeScreen({ navigation }) {
       <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>
         {/* Featured Story Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Tonight's story ✨</Text>
+          <Text style={[styles.sectionTitle, fonts.headlineSmall]}>Tonight's story ✨</Text>
           <FeaturedStoryCard
             story={storyOfTheDay}
             onPress={() => handleStoryPress(storyOfTheDay)}
           />
         </View>
+
+        {/* Favourites Section */}
+        {getFavoriteStories().length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Favourites 💕</Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.horizontalScroll}
+            >
+              {getFavoriteStories().map((story, storyIndex) => (
+                <StoryCard
+                  key={storyIndex}
+                  title={story.title}
+                  thumbnail={story.image}
+                  onCardPress={() => handleStoryPress(story)}
+                  style={storyIndex !== getFavoriteStories().length - 1 && styles.cardMargin}
+                />
+              ))}
+            </ScrollView>
+          </View>
+        )}
 
         {/* Category Sections */}
         {storiesCategories.map((category, index) => {
@@ -223,7 +250,7 @@ const styles = StyleSheet.create({
     elevation: 8
   },
   appName: {
-    fontSize: 20,
+    ...fonts.headLineXs,
     fontWeight: '400',
     color: '#312E81'
   },
@@ -244,7 +271,7 @@ const styles = StyleSheet.create({
     marginTop: 32
   },
   sectionTitle: {
-    fontSize: 18,
+    ...fonts.headLineXs,
     fontWeight: '400',
     color: '#312E81',
     marginBottom: 16,
@@ -284,7 +311,7 @@ const styles = StyleSheet.create({
     borderColor: '#E5E7EB'
   },
   floatingButtonText: {
-    fontSize: 18,
+    ...fonts.titleLarge,
     color: '#1F2937',
     fontWeight: '400'
   }
@@ -332,15 +359,14 @@ const featuredStoryStyles = StyleSheet.create({
     gap: 8
   },
   title: {
-    fontSize: 18,
+    ...fonts.titleLarge,
     fontWeight: '400',
     color: '#312E81',
     marginBottom: 8
   },
   description: {
-    fontSize: 14,
+    ...fonts.bodyMedium,
     color: '#4F46E5',
-    lineHeight: 20,
     marginBottom: 12
   },
   metadata: {
@@ -354,11 +380,11 @@ const featuredStoryStyles = StyleSheet.create({
     gap: 4
   },
   metadataText: {
-    fontSize: 14,
+    ...fonts.bodyMedium,
     color: '#4F46E5'
   },
   metadataTextSmall: {
-    fontSize: 12,
+    ...fonts.bodySmall,
     color: '#EC4899'
   }
 });

@@ -39,7 +39,7 @@ function PersonalizeNameScreen({ navigation, route }) {
         {/* Header with Back Button */}
         <View style={styles.header}>
           <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-            <MaterialCommunityIcons name="arrow-left" size={20} color="#4F46E5" />
+            <MaterialCommunityIcons name="arrow-left" size={20} color={colors.primary} />
           </TouchableOpacity>
           <Text style={styles.stepIndicator}>Step 4 of 7</Text>
           <View style={styles.spacer} />
@@ -61,7 +61,7 @@ function PersonalizeNameScreen({ navigation, route }) {
             <TextInput
               style={styles.textInput}
               placeholder="Enter name"
-              placeholderTextColor="#C7D2FE"
+              placeholderTextColor={colors.primary80}
               value={childName}
               onChangeText={setChildName}
               autoCapitalize="words"
@@ -78,7 +78,7 @@ function PersonalizeNameScreen({ navigation, route }) {
             style={styles.button}
           >
             <Text style={styles.buttonText}>Continue</Text>
-            <MaterialCommunityIcons name="arrow-right" size={20} color="#FFFFFF" />
+            <MaterialCommunityIcons name="arrow-right" size={20} color={colors.white} />
           </TouchableOpacity>
           <View style={styles.safeArea} />
         </View>
@@ -88,11 +88,11 @@ function PersonalizeNameScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   appLayout: {
-    backgroundColor: '#FFF9F5'
+    backgroundColor: colors.neutral98
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFF9F5',
+    backgroundColor: colors.neutral98,
     marginTop:36,
     marginBottom: 16
   },
@@ -112,16 +112,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.6)',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
+    shadowColor: colors.black,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
     elevation: 1
   },
   stepIndicator: {
-    fontSize: 14,
-    color: '#4F46E5',
-    fontWeight: '500'
+    ...fonts.labelLarge,
+    color: colors.primary
   },
   spacer: {
     width: 40
@@ -136,7 +135,7 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     height: '100%',
-    backgroundColor: '#4F46E5',
+    backgroundColor: colors.primary,
     borderRadius: 4
   },
   scrollContent: {
@@ -145,16 +144,15 @@ const styles = StyleSheet.create({
     paddingTop: 24
   },
   title: {
-    fontSize: 30,
+    ...fonts.headlineMedium,
     fontWeight: '400',
-    color: '#312E81',
+    color: colors.neutral20,
     textAlign: 'center',
-    marginBottom: 48,
-    lineHeight: 36
+    marginBottom: 48
   },
   optional: {
-    fontSize: 20,
-    color: '#312E81'
+    ...fonts.headLineXs,
+    color: colors.neutral20
   },
   inputContainer: {
     maxWidth: 384,
@@ -162,15 +160,15 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   textInput: {
+    ...fonts.titleLarge,
     width: '100%',
     paddingVertical: 16,
     paddingHorizontal: 24,
     borderRadius: 24,
     borderWidth: 2,
-    borderColor: '#E5E7EB',
-    backgroundColor: '#FFFFFF',
-    color: '#312E81',
-    fontSize: 18,
+    borderColor: colors.neutral90,
+    backgroundColor: colors.white,
+    color: colors.neutral20,
     textAlign: 'center'
   },
   footer: {
@@ -181,20 +179,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#4F46E5',
+    backgroundColor: colors.primary,
     paddingVertical: 16,
     borderRadius: 9999,
     gap: 8,
-    shadowColor: '#4F46E5',
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8
   },
   buttonText: {
-    fontSize: 16,
+    ...fonts.labelLarge,
     fontWeight: '500',
-    color: '#FFFFFF'
+    color: colors.white
   },
   safeArea: {
     height: 32

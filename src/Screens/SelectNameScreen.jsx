@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AppLayout from '../Components/AppLayout';
 import { NewAiChatIcon } from '../Utilities/utilityFunctions';
+import colors from '../Utilities/colors';
+import fonts from '../Utilities/fonts';
 
 function SelectNameScreen({ navigation, route }) {
   const [personalize, setPersonalize] = useState(null);
@@ -32,7 +34,7 @@ function SelectNameScreen({ navigation, route }) {
         {/* Header with Back Button */}
         <View style={styles.header}>
           <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-            <MaterialCommunityIcons name="arrow-left" size={20} color="#4F46E5" />
+            <MaterialCommunityIcons name="arrow-left" size={20} color={colors.primary} />
           </TouchableOpacity>
           <View style={styles.spacer} />
         </View>
@@ -86,7 +88,7 @@ function SelectNameScreen({ navigation, route }) {
           >
             {isStoryGeneration ? (
               <>
-                <NewAiChatIcon color="#FFFFFF" size={20} />
+                <NewAiChatIcon color={colors.white} size={20} />
                 <Text style={[styles.buttonText, personalize === null && styles.buttonTextDisabled]}>
                   Generate Story
                 </Text>
@@ -99,7 +101,7 @@ function SelectNameScreen({ navigation, route }) {
                 <MaterialCommunityIcons
                   name="arrow-right"
                   size={20}
-                  color={personalize === null ? '#9CA3AF' : '#FFFFFF'}
+                  color={personalize === null ? colors.neutral60 : colors.white}
                 />
               </>
             )}
@@ -113,11 +115,11 @@ function SelectNameScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   appLayout: {
-    backgroundColor: '#FFF9F5'
+    backgroundColor: colors.neutral98
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFF9F5'
+    backgroundColor: colors.neutral98
   },
   header: {
     flexDirection: 'row',
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.6)',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
+    shadowColor: colors.black,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
@@ -150,16 +152,15 @@ const styles = StyleSheet.create({
     paddingTop: 24
   },
   title: {
-    fontSize: 30,
+    ...fonts.headlineLarge,
     fontWeight: '400',
-    color: '#312E81',
+    color: colors.neutral20,
     textAlign: 'center',
-    marginBottom: 8,
-    lineHeight: 36
+    marginBottom: 8
   },
   subtitle: {
-    fontSize: 16,
-    color: '#4F46E5',
+    ...fonts.bodyLarge,
+    color: colors.primary,
     textAlign: 'center',
     marginBottom: 32
   },
@@ -177,22 +178,22 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.6)'
   },
   optionCardSelected: {
-    backgroundColor: '#EEF2FF',
-    borderColor: '#4F46E5',
-    shadowColor: '#4F46E5',
+    backgroundColor: colors.primary95,
+    borderColor: colors.primary,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 4
   },
   optionText: {
-    fontSize: 18,
-    color: '#312E81',
+    ...fonts.titleLarge,
+    color: colors.neutral20,
     textAlign: 'center',
     fontWeight: '400'
   },
   optionTextSelected: {
-    color: '#4F46E5',
+    color: colors.primary,
     fontWeight: '500'
   },
   footer: {
@@ -203,27 +204,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#4F46E5',
+    backgroundColor: colors.primary,
     paddingVertical: 16,
     borderRadius: 9999,
     gap: 8,
-    shadowColor: '#4F46E5',
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8
   },
   buttonDisabled: {
-    backgroundColor: '#E5E7EB',
+    backgroundColor: colors.neutral90,
     shadowOpacity: 0
   },
   buttonText: {
-    fontSize: 16,
+    ...fonts.labelLarge,
     fontWeight: '500',
-    color: '#FFFFFF'
+    color: colors.white
   },
   buttonTextDisabled: {
-    color: '#9CA3AF'
+    color: colors.neutral60
   },
   safeArea: {
     height: 32

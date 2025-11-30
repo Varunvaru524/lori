@@ -53,7 +53,7 @@ function MoralsLessonsScreen({ navigation, route }) {
       {/* Header with Back Button */}
       <View style={styles.header}>
         <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-          <MaterialCommunityIcons name="arrow-left" size={20} color="#4F46E5" />
+          <MaterialCommunityIcons name="arrow-left" size={20} color={colors.primary} />
         </TouchableOpacity>
         {!isStoryGeneration && <Text style={styles.stepIndicator}>Step 5 of 7</Text>}
         <View style={styles.spacer} />
@@ -100,7 +100,7 @@ function MoralsLessonsScreen({ navigation, route }) {
           <MaterialCommunityIcons
             name="arrow-right"
             size={20}
-            color={selectedMorals.length === 0 ? '#9CA3AF' : '#FFFFFF'}
+            color={selectedMorals.length === 0 ? colors.neutral60 : colors.white}
           />
         </TouchableOpacity>
         <View style={styles.safeArea} />
@@ -112,7 +112,7 @@ function MoralsLessonsScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF9F5',
+    backgroundColor: colors.neutral98,
     marginTop: 36,
     marginBottom: 16
   },
@@ -132,16 +132,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.6)',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
+    shadowColor: colors.black,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
     elevation: 1
   },
   stepIndicator: {
-    fontSize: 14,
-    color: '#4F46E5',
-    fontWeight: '500'
+    ...fonts.labelLarge,
+    color: colors.primary
   },
   spacer: {
     width: 40
@@ -156,7 +155,7 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     height: '100%',
-    backgroundColor: '#4F46E5',
+    backgroundColor: colors.primary,
     borderRadius: 4
   },
   scrollContent: {
@@ -165,12 +164,11 @@ const styles = StyleSheet.create({
     paddingTop: 16
   },
   title: {
-    fontSize: 30,
+    ...fonts.headlineMedium,
     fontWeight: '400',
-    color: '#312E81',
+    color: colors.neutral20,
     textAlign: 'center',
-    marginBottom: 38,
-    lineHeight: 36
+    marginBottom: 38
   },
   gridContainer: {
     flexDirection: 'row',
@@ -183,14 +181,14 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 24,
     borderWidth: 2,
-    borderColor: '#E5E7EB',
-    backgroundColor: '#FFFFFF',
+    borderColor: colors.neutral90,
+    backgroundColor: colors.white,
     alignItems: 'center'
   },
   gridCardSelected: {
-    backgroundColor: '#EEF2FF',
-    borderColor: '#4F46E5',
-    shadowColor: '#4F46E5',
+    backgroundColor: colors.primary95,
+    borderColor: colors.primary,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
@@ -202,8 +200,8 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   gridLabel: {
-    fontSize: 14,
-    color: '#312E81',
+    ...fonts.labelLarge,
+    color: colors.neutral20,
     textAlign: 'center',
     fontWeight: '400'
   },
@@ -215,27 +213,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#4F46E5',
+    backgroundColor: colors.primary,
     paddingVertical: 16,
     borderRadius: 9999,
     gap: 8,
-    shadowColor: '#4F46E5',
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8
   },
   buttonDisabled: {
-    backgroundColor: '#E5E7EB',
+    backgroundColor: colors.neutral90,
     shadowOpacity: 0
   },
   buttonText: {
-    fontSize: 16,
+    ...fonts.labelLarge,
     fontWeight: '500',
-    color: '#FFFFFF'
+    color: colors.white
   },
   buttonTextDisabled: {
-    color: '#9CA3AF'
+    color: colors.neutral60
   },
   safeArea: {
     height: 32

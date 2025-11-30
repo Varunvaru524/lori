@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useFonts, Inter_100Thin, Inter_200ExtraLight, Inter_300Light, Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold, Inter_800ExtraBold, Inter_900Black, } from '@expo-google-fonts/inter';
+import { Quicksand_300Light, Quicksand_400Regular, Quicksand_500Medium, Quicksand_600SemiBold, Quicksand_700Bold, } from '@expo-google-fonts/quicksand';
 import GettingStarted from './Screens/GettingStarted';
 import { Platform } from 'react-native';
 import fonts from './Utilities/fonts';
@@ -23,6 +25,8 @@ const Stack = createStackNavigator();
 function Index() {
 
   const [initialRouteName, setInitialRouteName] = useState(null);
+  let [fontsLoaded] = useFonts({ Inter_100Thin, Inter_200ExtraLight, Inter_300Light, Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold, Inter_800ExtraBold, Inter_900Black, Quicksand_300Light, Quicksand_400Regular, Quicksand_500Medium, Quicksand_600SemiBold, Quicksand_700Bold });
+
 
   useEffect(() => {
     (async () => {
@@ -33,7 +37,7 @@ function Index() {
   }, []);
 
   // Wait for initial route to be determined
-  if (!initialRouteName) { return null }
+  if (!initialRouteName || !fontsLoaded) { return null }
   return (
     <NavigationContainer>
       <Stack.Navigator

@@ -14,6 +14,7 @@ function GenerateStoryScreen({ navigation, route }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isTyping, setIsTyping] = useState(false);
   const [error, setError] = useState(null);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   // Animation values
   const pulseAnim = useRef(new Animated.Value(1)).current;
@@ -132,12 +133,26 @@ function GenerateStoryScreen({ navigation, route }) {
     setIsTyping(false);
   };
 
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  };
+
   return (
       <View style={styles.container}>
-        {/* Close Button - Top Left */}
-        <TouchableOpacity onPress={handleClose} style={styles.closeButton}>
-          <MaterialCommunityIcons name="close" size={24} color={colors.neutral20} />
-        </TouchableOpacity>
+        {/* Header with Close and Favorite buttons */}
+        <View style={styles.header}>
+          <TouchableOpacity onPress={handleClose} style={styles.headerButton}>
+            <MaterialCommunityIcons name="close" size={20} color={colors.primary} />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={toggleFavorite} style={styles.headerButton}>
+            <MaterialCommunityIcons 
+              name={isFavorite ? "heart" : "heart-outline"} 
+              size={20} 
+              color={isFavorite ? "#EC4899" : colors.primary} 
+            />
+          </TouchableOpacity>
+        </View>
 
         {/* Content Area */}
         <ScrollView 
@@ -178,12 +193,12 @@ function GenerateStoryScreen({ navigation, route }) {
                   ]}
                 >
                   <LinearGradient
-                    colors={['#F472B6', '#4F46E5']}
+                    colors={[colors.primary, colors.primary30]}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 1 }}
                     style={styles.gradientCircle}
                   >
-                    <NewAiChatIcon color="#FFFFFF" size={46} />
+                    <NewAiChatIcon color={colors.white} size={46} />
                   </LinearGradient>
                 </Animated.View>
               </View>
@@ -265,31 +280,37 @@ function GenerateStoryScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF9F5',
+    backgroundColor: colors.neutral98,
     marginTop: 30
   },
-  closeButton: {
-    position: 'absolute',
-    top: 16,
-    left: 24,
-    zIndex: 10,
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingTop: 16,
+    paddingBottom: 16,
+    backgroundColor: 'rgba(255, 249, 245, 0.95)',
+    zIndex: 10
+  },
+  headerButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
     backgroundColor: 'rgba(255, 255, 255, 0.6)',
-    justifyContent: 'center',
     alignItems: 'center',
-    elevation: 2,
+    justifyContent: 'center',
     shadowColor: colors.black,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1
   },
   scrollContent: {
     flex: 1
   },
   scrollContentContainer: {
-    paddingTop: 72,
+    paddingTop: 24,
     paddingHorizontal: 24
   },
   loadingContainer: {
@@ -314,8 +335,8 @@ const styles = StyleSheet.create({
     borderRadius: 64,
     borderWidth: 4,
     borderColor: 'transparent',
-    borderTopColor: '#4F46E5',
-    borderRightColor: '#C7D2FE'
+    borderTopColor: colors.primary,
+    borderRightColor: colors.primary80
   },
   spinningBorderInner: {
     width: '100%',
@@ -336,17 +357,16 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   loadingTitle: {
-    fontSize: 24,
+    ...fonts.headlineSmall,
     fontWeight: '400',
-    color: '#312E81',
+    color: colors.neutral20,
     marginBottom: 16,
     textAlign: 'center'
   },
   loadingSubtitle: {
-    fontSize: 16,
-    color: '#4F46E5',
+    ...fonts.bodyLarge,
+    color: colors.primary,
     textAlign: 'center',
-    lineHeight: 24,
     paddingHorizontal: 20
   },
   bouncingDotsContainer: {
@@ -362,10 +382,10 @@ const styles = StyleSheet.create({
     borderRadius: 6
   },
   bouncingDotIndigo: {
-    backgroundColor: '#818CF8'
+    backgroundColor: colors.primary50
   },
   bouncingDotPink: {
-    backgroundColor: '#F472B6'
+    backgroundColor: colors.primary
   },
   errorContainer: {
     flex: 1,
@@ -391,12 +411,12 @@ const styles = StyleSheet.create({
     height: 100
   },
   buttonContainer: {
-    backgroundColor: '#FFF9F5',
+    backgroundColor: colors.neutral98,
     paddingHorizontal: 24,
     paddingVertical: 16,
     paddingBottom: 34,
     borderTopWidth: 1,
-    borderTopColor: 'rgba(255, 255, 255, 0.6)',
+    borderTopColor: colors.neutral90,
     elevation: 8,
     shadowColor: colors.black,
     shadowOffset: { width: 0, height: -2 },

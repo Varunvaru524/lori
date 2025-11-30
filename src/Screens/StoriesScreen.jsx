@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     elevation: 1
   },
   pageCounter: {
-    fontSize: 14,
+    ...fonts.labelLarge,
     color: '#4F46E5',
     fontWeight: '500'
   },
@@ -199,18 +199,15 @@ const styles = StyleSheet.create({
     paddingBottom: 32
   },
   titleContainer: {
-    marginBottom: 16,
     marginTop: 8
   },
   storyTitle: {
-    fontSize: 24,
-    fontWeight: '400',
+    ...fonts.headLineXs,
     color: '#312E81',
     textAlign: 'center'
   },
   storyCardWrapper: {
     height: SCREEN_WIDTH * 1.4, // Approximate height for card
-    marginBottom: 20
   },
   pagerView: {
     flex: 1
@@ -245,9 +242,10 @@ const styles = StyleSheet.create({
     paddingBottom: 32
   },
   storyText: {
-    fontSize: 20,
-    lineHeight: 32,
-    color: '#4F46E5',
+    ...fonts.lableXl,
+    fontFamily: 'Quicksand_500Medium',
+    fontSize:28,
+    lineHeight: 42,
     textAlign: 'center',
     fontWeight: '400'
   },
@@ -255,7 +253,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 20
   },
   navButton: {
     width: 48,

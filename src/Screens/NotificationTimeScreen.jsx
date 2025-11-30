@@ -76,7 +76,7 @@ function NotificationTimeScreen({ navigation, route }) {
       {/* Header with Back Button */}
       <View style={styles.header}>
         <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-          <MaterialCommunityIcons name="arrow-left" size={20} color="#4F46E5" />
+          <MaterialCommunityIcons name="arrow-left" size={20} color={colors.primary} />
         </TouchableOpacity>
         <Text style={styles.stepIndicator}>Step 7 of 7</Text>
         <View style={styles.spacer} />
@@ -89,7 +89,7 @@ function NotificationTimeScreen({ navigation, route }) {
 
       {/* Content */}
       <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        <Text style={styles.title}>Story of the Day</Text>
+        <Text style={styles.title}>Preferred time to send story of the day</Text>
 
         <TouchableOpacity onPress={showTimePicker} style={styles.timeCard}>
           <Text style={styles.timeDisplay}>{formatTime(selectedTime)}</Text>
@@ -103,7 +103,7 @@ function NotificationTimeScreen({ navigation, route }) {
           style={styles.button}
         >
           <MaterialCommunityIcons name="check" size={20} color="#FFFFFF" />
-          <Text style={styles.buttonText}>Complete Setup</Text>
+          <Text style={styles.buttonText}>Let's Go</Text>
         </TouchableOpacity>
         <View style={styles.safeArea} />
       </View>
@@ -132,7 +132,7 @@ function NotificationTimeScreen({ navigation, route }) {
                 mode="time"
                 display="spinner"
                 onChange={handleConfirm}
-                textColor="#312E81"
+                textColor={colors.neutral20}
                 style={{ alignSelf: 'center' }}
               />
             </View>
@@ -154,11 +154,11 @@ function NotificationTimeScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   appLayout: {
-    backgroundColor: '#FFF9F5'
+    backgroundColor: colors.neutral98
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFF9F5',
+    backgroundColor: colors.neutral98,
     marginTop: 36,
     marginBottom: 16
   },
@@ -178,16 +178,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.6)',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
+    shadowColor: colors.black,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
     elevation: 1
   },
   stepIndicator: {
-    fontSize: 14,
-    color: '#4F46E5',
-    fontWeight: '500'
+    ...fonts.labelLarge,
+    color: colors.primary
   },
   spacer: {
     width: 40
@@ -202,7 +201,7 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     height: '100%',
-    backgroundColor: '#4F46E5',
+    backgroundColor: colors.primary,
     borderRadius: 4
   },
   scrollContent: {
@@ -211,27 +210,26 @@ const styles = StyleSheet.create({
     paddingTop: 24
   },
   title: {
-    fontSize: 30,
+    ...fonts.headlineMedium,
     fontWeight: '400',
-    color: '#312E81',
+    color: colors.neutral20,
     textAlign: 'center',
-    marginBottom: 48,
-    lineHeight: 36
+    marginBottom: 48
   },
   timeCard: {
     maxWidth: 384,
     alignSelf: 'center',
     width: '100%',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.white,
     borderRadius: 24,
     borderWidth: 2,
-    borderColor: '#E5E7EB',
+    borderColor: colors.neutral90,
     padding: 32,
     alignItems: 'center'
   },
   timeDisplay: {
-    fontSize: 32,
-    color: '#312E81',
+    ...fonts.headlineLarge,
+    color: colors.neutral20,
     fontWeight: '400',
     textAlign: 'center'
   },
@@ -243,20 +241,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#4F46E5',
+    backgroundColor: colors.primary,
     paddingVertical: 16,
     borderRadius: 9999,
     gap: 8,
-    shadowColor: '#4F46E5',
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8
   },
   buttonText: {
-    fontSize: 16,
+    ...fonts.labelLarge,
     fontWeight: '500',
-    color: '#FFFFFF'
+    color: colors.white
   },
   safeArea: {
     height: 32
@@ -267,7 +265,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   modalContent: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.white,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     paddingBottom: 34
@@ -279,16 +277,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB'
+    borderBottomColor: colors.neutral90
   },
   modalTitle: {
-    fontSize: 17,
+    ...fonts.titleMedium,
     fontWeight: '600',
-    color: '#312E81'
+    color: colors.neutral20
   },
   modalButton: {
-    fontSize: 17,
-    color: '#4F46E5'
+    ...fonts.titleMedium,
+    color: colors.primary
   },
   modalButtonDone: {
     fontWeight: '600'

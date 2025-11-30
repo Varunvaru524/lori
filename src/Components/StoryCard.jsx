@@ -42,7 +42,7 @@ function StoryCard({ title, style, onCardPress, isFavorite, onCheckPress, thumbn
 
   // Screen
   return (
-    <TouchableOpacity onPress={onCardPress} activeOpacity={0.8}>
+    <TouchableOpacity onPress={onCardPress} activeOpacity={0.8} style={styles.cardContainer}>
       <LinearGradient
         colors={gradient}
         start={{ x: 0, y: 0 }}
@@ -80,15 +80,22 @@ function StoryCard({ title, style, onCardPress, isFavorite, onCheckPress, thumbn
 
 // Styles
 const styles = StyleSheet.create({
+  cardContainer: {
+    shadowColor: colors.black,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0,
+    shadowRadius: 12,
+    elevation: 10,
+  },
   gradientBorder: {
     width: 160,
     borderRadius: 24,
     padding: 2,
-    shadowColor: '#4F46E5',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 8,
+    shadowColor: colors.black,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 10,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.5)'
   },
@@ -122,12 +129,11 @@ const styles = StyleSheet.create({
     right: 8
   },
   title: {
-    fontSize: 14,
-    color: '#FFFFFF',
-    fontWeight: '400',
-    textShadowColor: 'rgba(0, 0, 0, 0.3)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2
+    ...fonts.labelLarge,
+    color: colors.white,
+    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4
   }
 });
 

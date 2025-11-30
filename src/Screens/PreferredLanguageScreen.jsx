@@ -40,7 +40,7 @@ function PreferredLanguageScreen({ navigation, route }) {
         {/* Header with Back Button */}
         <View style={styles.header}>
           <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-            <MaterialCommunityIcons name="arrow-left" size={20} color="#4F46E5" />
+            <MaterialCommunityIcons name="arrow-left" size={20} color={colors.primary} />
           </TouchableOpacity>
           {!isStoryGeneration && <Text style={styles.stepIndicator}>Step 1 of 7</Text>}
           <View style={styles.spacer} />
@@ -99,7 +99,7 @@ function PreferredLanguageScreen({ navigation, route }) {
             <MaterialCommunityIcons 
               name="arrow-right" 
               size={20} 
-              color={!selectedLanguage ? '#9CA3AF' : '#FFFFFF'} 
+              color={!selectedLanguage ? colors.neutral60 : colors.white} 
             />
           </TouchableOpacity>
           <View style={styles.safeArea} />
@@ -134,16 +134,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.6)',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
+    shadowColor: colors.black,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
     elevation: 1
   },
   stepIndicator: {
-    fontSize: 14,
-    color: '#4F46E5',
-    fontWeight: '500'
+    ...fonts.labelLarge,
+    color: colors.primary
   },
   spacer: {
     width: 40
@@ -158,7 +157,7 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     height: '100%',
-    backgroundColor: '#4F46E5',
+    backgroundColor: colors.primary,
     borderRadius: 4
   },
   scrollContent: {
@@ -167,12 +166,11 @@ const styles = StyleSheet.create({
     paddingTop: 24
   },
   title: {
-    fontSize: 30,
+    ...fonts.headlineMedium,
     fontWeight: '400',
-    color: '#312E81',
+    color: colors.neutral20,
     textAlign: 'center',
-    marginBottom: 48,
-    lineHeight: 36
+    marginBottom: 48
   },
   optionsContainer: {
     gap: 16,
@@ -187,45 +185,45 @@ const styles = StyleSheet.create({
     padding: 24,
     borderRadius: 24,
     borderWidth: 2,
-    borderColor: '#E5E7EB',
-    backgroundColor: '#FFFFFF'
+    borderColor: colors.neutral90,
+    backgroundColor: colors.white
   },
   optionCardSelected: {
-    backgroundColor: '#4F46E5',
-    borderColor: '#4F46E5',
-    shadowColor: '#4F46E5',
+    backgroundColor: colors.primary,
+    borderColor: colors.primary,
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8
   },
   optionText: {
-    fontSize: 20,
-    color: '#312E81',
+    ...fonts.headLineXs,
+    color: colors.neutral20,
     fontWeight: '400'
   },
   optionTextSelected: {
-    color: '#FFFFFF'
+    color: colors.white
   },
   radioOuter: {
     width: 24,
     height: 24,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: '#D1D5DB',
-    backgroundColor: '#FFFFFF',
+    borderColor: colors.neutral80,
+    backgroundColor: colors.white,
     alignItems: 'center',
     justifyContent: 'center'
   },
   radioOuterSelected: {
-    borderColor: '#FFFFFF',
-    backgroundColor: '#FFFFFF'
+    borderColor: colors.white,
+    backgroundColor: colors.white
   },
   radioInner: {
     width: 12,
     height: 12,
     borderRadius: 6,
-    backgroundColor: '#4F46E5'
+    backgroundColor: colors.primary
   },
   footer: {
     backgroundColor: 'rgba(255, 249, 245, 0.95)',
@@ -235,27 +233,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#4F46E5',
+    backgroundColor: colors.primary,
     paddingVertical: 16,
     borderRadius: 9999,
     gap: 8,
-    shadowColor: '#4F46E5',
+    shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8
   },
   buttonDisabled: {
-    backgroundColor: '#E5E7EB',
+    backgroundColor: colors.neutral90,
     shadowOpacity: 0
   },
   buttonText: {
-    fontSize: 16,
+    ...fonts.labelLarge,
     fontWeight: '500',
-    color: '#FFFFFF'
+    color: colors.white
   },
   buttonTextDisabled: {
-    color: '#9CA3AF'
+    color: colors.neutral60
   },
   safeArea: {
     height: 32

@@ -15,7 +15,7 @@ function GettingStarted({ navigation }) {
       <View style={styles.contentWrapper}>
         {/* App Name */}
         <View style={styles.appNameContainer}>
-          <Text style={styles.appName}>DreamTales</Text>
+          <Text style={styles.appName}>Lori</Text>
         </View>
 
         {/* Top spacing */}
@@ -72,10 +72,10 @@ const styles = StyleSheet.create({
     marginBottom: 32
   },
   appName: {
+    fontFamily: 'Quicksand_700Bold',
     fontSize: 36,
-    fontWeight: '600',
-    color: '#4F46E5', // indigo-700
-    fontFamily: 'Quicksand'
+    letterSpacing: 0,
+    color: '#F7884D', // indigo-700
   },
   topSpacer: {
     flex: 1
@@ -96,18 +96,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24
   },
   tagline: {
-    fontSize: 28,
-    fontWeight: '600',
-    color: '#312E81', // indigo-900
-    textAlign: 'center',
-    lineHeight: 36
+    fontFamily: 'Quicksand_700Bold',
+    fontSize: 30,
+    color: '#34302D', // indigo-900
+    textAlign: 'center'
   },
   bottomSpacer: {
     flex: 1
   },
   button: {
     width: '100%',
-    backgroundColor: '#4F46E5', // indigo-600
+    backgroundColor: colors.primary, // indigo-600
     borderRadius: 9999,
     paddingVertical: 16
   },
