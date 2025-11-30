@@ -120,7 +120,7 @@ function StoriesScreen({ navigation, route }) {
             </TouchableOpacity>
 
             {/* Page Indicators */}
-            <View style={styles.pageIndicators}>
+            {/* <View style={styles.pageIndicators}>
               {story.pages.map((_, index) => (
                 <View
                   key={index}
@@ -130,7 +130,7 @@ function StoriesScreen({ navigation, route }) {
                   ]}
                 />
               ))}
-            </View>
+            </View> */}
 
             {/* Next Button */}
             <TouchableOpacity

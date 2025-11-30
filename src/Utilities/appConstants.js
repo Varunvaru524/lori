@@ -1,6 +1,8 @@
-const storiesCategories = ['Honesty', 'Kindness', 'Patience', 'Perseverance']
+const storiesCategories = ['Honesty', 'Bravery', 'Friendship']
+const languages = ['English', 'Hindi']
 
 
 export {
-  storiesCategories
+  storiesCategories,
+  languages
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -10,17 +10,43 @@ import fonts from '../Utilities/fonts';
 import { storiesCategories } from '../Utilities/appConstants';
 import stories from '../content/stories';
 import AppButton from '../Components/AppButton';
-import { clearAllAsyncStorage } from '../libraries/asyncStorage';
+import { clearAllAsyncStorage, getUserDetails } from '../libraries/asyncStorage';
 import { NewAiChatIcon } from '../Utilities/utilityFunctions';
 
 function HomeScreen({ navigation }) {
+  const [userLanguage, setUserLanguage] = useState('English');
+  const [filteredStories, setFilteredStories] = useState([]);
 
-  // Get story of the day (first story for now)
-  const storyOfTheDay = stories[0];
+  // Load user's preferred language and filter stories
+  useEffect(() => {
+    const loadUserLanguage = async () => {
+      try {
+        const userDetails = await getUserDetails();
+        const preferredLanguage = userDetails?.preferredLanguage || 'English';
+        setUserLanguage(preferredLanguage);
+        
+        // Filter stories based on user's language
+        const storiesInUserLanguage = stories.filter(
+          story => story.language === preferredLanguage
+        );
+        setFilteredStories(storiesInUserLanguage);
+      } catch (error) {
+        console.error('Error loading user language:', error);
+        // Default to English if there's an error
+        setUserLanguage('English');
+        setFilteredStories(stories.filter(story => story.language === 'English'));
+      }
+    };
 
-  // Group stories by category
+    loadUserLanguage();
+  }, []);
+
+  // Get story of the day (first story in filtered list)
+  const storyOfTheDay = filteredStories[0] || stories[0];
+
+  // Group stories by category (from filtered stories)
   const getStoriesByCategory = (category) => {
-    return stories.filter(story => story.category === category);
+    return filteredStories.filter(story => story.category === category);
   };
 
   const handleStoryPress = (story) => {
