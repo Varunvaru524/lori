@@ -42,7 +42,7 @@ function HomeScreen({ navigation }) {
   }, []);
 
   // Get story of the day (first story in filtered list)
-  const storyOfTheDay = filteredStories[0] || stories[0];
+  const storyOfTheDay = filteredStories[3] || stories[0];
 
   // Get favorite stories (from filtered stories)
   const getFavoriteStories = () => {
