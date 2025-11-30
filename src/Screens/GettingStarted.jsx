@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   },
   tagline: {
     fontFamily: 'Quicksand_700Bold',
-    fontSize: 30,
+    fontSize: 28,
     color: '#34302D', // indigo-900
     textAlign: 'center'
   },
