@@ -15,6 +15,11 @@ function GettingStarted({ navigation }) {
       <View style={styles.contentWrapper}>
         {/* App Name */}
         <View style={styles.appNameContainer}>
+          <Image
+            source={require('../../assets/logo.png')}
+            style={styles.appLogo}
+            contentFit="contain"
+          />
           <Text style={styles.appName}>Lori</Text>
         </View>
 
@@ -57,7 +62,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFF9F5',
-    marginTop:20
+    marginTop: 20
   },
   contentWrapper: {
     flex: 1,
@@ -68,14 +73,23 @@ const styles = StyleSheet.create({
     paddingVertical: 48
   },
   appNameContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
+    gap: 8,
+    alignSelf: 'center',
     marginBottom: 32
+  },
+  appLogo: {
+    width: 48,
+    height: 48,
+    borderRadius: 24, // Rounded corners
+    marginBottom: 4, // 4px gap between logo and text
   },
   appName: {
     fontFamily: 'Quicksand_700Bold',
     fontSize: 36,
     letterSpacing: 0,
-    color: '#F7884D', // indigo-700
+    color: colors.neutral20, // indigo-700
   },
   topSpacer: {
     flex: 1

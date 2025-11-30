@@ -63,14 +63,7 @@ function HomeScreen({ navigation }) {
       {/* Header - Fixed at top */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
-          <LinearGradient
-            colors={['#93C5FD', '#818CF8']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.logoGradient}
-          >
-            <MaterialCommunityIcons name="weather-night" size={24} color="#FFFFFF" />
-          </LinearGradient>
+          <Image source={require('../../assets/logo.png')} style={styles.logo} contentFit="contain" />
           <View>
             <Text style={styles.appName}>Lori</Text>
           </View>
@@ -214,19 +207,24 @@ function FeaturedStoryCard({ story, onPress }) {
 
 // Styles
 const styles = StyleSheet.create({
+  logo: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+  },
   container: {
     flex: 1,
-    backgroundColor: '#FFF9F5'
+    backgroundColor: colors.white,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
+    paddingLeft:16,
     paddingTop: 24,
     paddingBottom: 16,
     marginTop: 40,
-    backgroundColor: 'rgba(255, 249, 245, 0.95)',
     zIndex: 1
   },
   scrollContent: {
@@ -235,7 +233,7 @@ const styles = StyleSheet.create({
   headerLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12
+    gap: 0
   },
   logoGradient: {
     width: 48,
@@ -251,6 +249,7 @@ const styles = StyleSheet.create({
   },
   appName: {
     ...fonts.headLineXs,
+    fontFamily:'Quicksand_500Medium',
     fontWeight: '400',
     color: '#312E81'
   },
