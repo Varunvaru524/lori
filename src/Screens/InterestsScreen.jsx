@@ -31,7 +31,7 @@ function InterestsScreen({ navigation, route }) {
   const handleNext = () => {
     // Check if we're in story generation mode or onboarding mode
     const isStoryGeneration = route.params?.isStoryGeneration;
-    
+
     if (isStoryGeneration) {
       navigation.navigate('PreferredLanguageScreen', {
         ...route.params,
@@ -51,63 +51,61 @@ function InterestsScreen({ navigation, route }) {
   };
 
   return (
-    <AppLayout style={styles.appLayout}>
-      <View style={styles.container}>
-        {/* Header with Back Button */}
-        <View style={styles.header}>
-          <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-            <MaterialCommunityIcons name="arrow-left" size={20} color="#4F46E5" />
-          </TouchableOpacity>
-          <Text style={styles.stepIndicator}>Step 6 of 7</Text>
-          <View style={styles.spacer} />
-        </View>
-
-        {/* Progress Bar */}
-        <View style={styles.progressBarContainer}>
-          <View style={[styles.progressBar, { width: `${(6 / 7) * 100}%` }]} />
-        </View>
-
-        {/* Content */}
-        <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>
-          <Text style={styles.title}>What does your child love?</Text>
-
-          <View style={styles.gridContainer}>
-            {interestsOptions.map((interest) => (
-              <TouchableOpacity
-                key={interest.id}
-                onPress={() => toggleInterest(interest.id)}
-                style={[
-                  styles.gridCard,
-                  selectedInterests.includes(interest.id) && styles.gridCardSelected
-                ]}
-              >
-                <Text style={styles.emoji}>{interest.emoji}</Text>
-                <Text style={styles.gridLabel}>{interest.label}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </ScrollView>
-
-        {/* Footer Button */}
-        <View style={styles.footer}>
-          <TouchableOpacity
-            onPress={handleNext}
-            disabled={selectedInterests.length === 0}
-            style={[styles.button, selectedInterests.length === 0 && styles.buttonDisabled]}
-          >
-            <Text style={[styles.buttonText, selectedInterests.length === 0 && styles.buttonTextDisabled]}>
-              Continue
-            </Text>
-            <MaterialCommunityIcons 
-              name="arrow-right" 
-              size={20} 
-              color={selectedInterests.length === 0 ? '#9CA3AF' : '#FFFFFF'} 
-            />
-          </TouchableOpacity>
-          <View style={styles.safeArea} />
-        </View>
+    <View style={styles.container}>
+      {/* Header with Back Button */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={handleBack} style={styles.backButton}>
+          <MaterialCommunityIcons name="arrow-left" size={20} color="#4F46E5" />
+        </TouchableOpacity>
+        <Text style={styles.stepIndicator}>Step 6 of 7</Text>
+        <View style={styles.spacer} />
       </View>
-    </AppLayout>
+
+      {/* Progress Bar */}
+      <View style={styles.progressBarContainer}>
+        <View style={[styles.progressBar, { width: `${(6 / 7) * 100}%` }]} />
+      </View>
+
+      {/* Content */}
+      <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>
+        <Text style={styles.title}>What does your child love?</Text>
+
+        <View style={styles.gridContainer}>
+          {interestsOptions.map((interest) => (
+            <TouchableOpacity
+              key={interest.id}
+              onPress={() => toggleInterest(interest.id)}
+              style={[
+                styles.gridCard,
+                selectedInterests.includes(interest.id) && styles.gridCardSelected
+              ]}
+            >
+              <Text style={styles.emoji}>{interest.emoji}</Text>
+              <Text style={styles.gridLabel}>{interest.label}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
+
+      {/* Footer Button */}
+      <View style={styles.footer}>
+        <TouchableOpacity
+          onPress={handleNext}
+          disabled={selectedInterests.length === 0}
+          style={[styles.button, selectedInterests.length === 0 && styles.buttonDisabled]}
+        >
+          <Text style={[styles.buttonText, selectedInterests.length === 0 && styles.buttonTextDisabled]}>
+            Continue
+          </Text>
+          <MaterialCommunityIcons
+            name="arrow-right"
+            size={20}
+            color={selectedInterests.length === 0 ? '#9CA3AF' : '#FFFFFF'}
+          />
+        </TouchableOpacity>
+        <View style={styles.safeArea} />
+      </View>
+    </View>
   );
 }
 
@@ -117,7 +115,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFF9F5'
+    backgroundColor: '#FFF9F5',
+    marginTop:36,
+    marginBottom: 16
   },
   header: {
     flexDirection: 'row',

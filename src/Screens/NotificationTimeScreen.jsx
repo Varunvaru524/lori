@@ -11,7 +11,7 @@ function NotificationTimeScreen({ navigation, route }) {
   // Set default time to 8:00 PM (20:00)
   const defaultTime = new Date();
   defaultTime.setHours(20, 0, 0, 0);
-  
+
   const [selectedTime, setSelectedTime] = useState(defaultTime);
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
 
@@ -27,7 +27,7 @@ function NotificationTimeScreen({ navigation, route }) {
     if (Platform.OS === 'android') {
       setTimePickerVisible(false);
     }
-    
+
     if (event.type === 'set' && time) {
       setSelectedTime(time);
       if (Platform.OS === 'ios') {
@@ -55,7 +55,7 @@ function NotificationTimeScreen({ navigation, route }) {
       };
 
       await setUserDetails(userDetails);
-      
+
       // Navigate to Home Screen
       navigation.reset({
         index: 0,
@@ -72,85 +72,83 @@ function NotificationTimeScreen({ navigation, route }) {
   };
 
   return (
-    <AppLayout style={styles.appLayout}>
-      <View style={styles.container}>
-        {/* Header with Back Button */}
-        <View style={styles.header}>
-          <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-            <MaterialCommunityIcons name="arrow-left" size={20} color="#4F46E5" />
-          </TouchableOpacity>
-          <Text style={styles.stepIndicator}>Step 7 of 7</Text>
-          <View style={styles.spacer} />
-        </View>
-
-        {/* Progress Bar */}
-        <View style={styles.progressBarContainer}>
-          <View style={[styles.progressBar, { width: '100%' }]} />
-        </View>
-
-        {/* Content */}
-        <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>
-          <Text style={styles.title}>Story of the Day</Text>
-
-          <TouchableOpacity onPress={showTimePicker} style={styles.timeCard}>
-            <Text style={styles.timeDisplay}>{formatTime(selectedTime)}</Text>
-          </TouchableOpacity>
-        </ScrollView>
-
-        {/* Footer Button */}
-        <View style={styles.footer}>
-          <TouchableOpacity
-            onPress={handleFinish}
-            style={styles.button}
-          >
-            <MaterialCommunityIcons name="check" size={20} color="#FFFFFF" />
-            <Text style={styles.buttonText}>Complete Setup</Text>
-          </TouchableOpacity>
-          <View style={styles.safeArea} />
-        </View>
-
-        {/* Date Time Picker */}
-        {Platform.OS === 'ios' ? (
-          <Modal
-            visible={isTimePickerVisible}
-            transparent={true}
-            animationType="slide"
-            onRequestClose={hideTimePicker}
-          >
-            <View style={styles.modalOverlay}>
-              <View style={styles.modalContent}>
-                <View style={styles.modalHeader}>
-                  <TouchableOpacity onPress={hideTimePicker}>
-                    <Text style={styles.modalButton}>Cancel</Text>
-                  </TouchableOpacity>
-                  <Text style={styles.modalTitle}>Select Time</Text>
-                  <TouchableOpacity onPress={hideTimePicker}>
-                    <Text style={[styles.modalButton, styles.modalButtonDone]}>Done</Text>
-                  </TouchableOpacity>
-                </View>
-                <DateTimePicker
-                  value={selectedTime}
-                  mode="time"
-                  display="spinner"
-                  onChange={handleConfirm}
-                  textColor="#312E81"
-                  style={{alignSelf:'center'}}
-                />
-              </View>
-            </View>
-          </Modal>
-        ) : (
-          isTimePickerVisible && (
-            <DateTimePicker
-              value={selectedTime}
-              mode="time"
-              display="default"
-              onChange={handleConfirm}
-            />
-          )
-        )}
+    <View style={styles.container}>
+      {/* Header with Back Button */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={handleBack} style={styles.backButton}>
+          <MaterialCommunityIcons name="arrow-left" size={20} color="#4F46E5" />
+        </TouchableOpacity>
+        <Text style={styles.stepIndicator}>Step 7 of 7</Text>
+        <View style={styles.spacer} />
       </View>
-    </AppLayout>
+
+      {/* Progress Bar */}
+      <View style={styles.progressBarContainer}>
+        <View style={[styles.progressBar, { width: '100%' }]} />
+      </View>
+
+      {/* Content */}
+      <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>
+        <Text style={styles.title}>Story of the Day</Text>
+
+        <TouchableOpacity onPress={showTimePicker} style={styles.timeCard}>
+          <Text style={styles.timeDisplay}>{formatTime(selectedTime)}</Text>
+        </TouchableOpacity>
+      </ScrollView>
+
+      {/* Footer Button */}
+      <View style={styles.footer}>
+        <TouchableOpacity
+          onPress={handleFinish}
+          style={styles.button}
+        >
+          <MaterialCommunityIcons name="check" size={20} color="#FFFFFF" />
+          <Text style={styles.buttonText}>Complete Setup</Text>
+        </TouchableOpacity>
+        <View style={styles.safeArea} />
+      </View>
+
+      {/* Date Time Picker */}
+      {Platform.OS === 'ios' ? (
+        <Modal
+          visible={isTimePickerVisible}
+          transparent={true}
+          animationType="slide"
+          onRequestClose={hideTimePicker}
+        >
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <View style={styles.modalHeader}>
+                <TouchableOpacity onPress={hideTimePicker}>
+                  <Text style={styles.modalButton}>Cancel</Text>
+                </TouchableOpacity>
+                <Text style={styles.modalTitle}>Select Time</Text>
+                <TouchableOpacity onPress={hideTimePicker}>
+                  <Text style={[styles.modalButton, styles.modalButtonDone]}>Done</Text>
+                </TouchableOpacity>
+              </View>
+              <DateTimePicker
+                value={selectedTime}
+                mode="time"
+                display="spinner"
+                onChange={handleConfirm}
+                textColor="#312E81"
+                style={{ alignSelf: 'center' }}
+              />
+            </View>
+          </View>
+        </Modal>
+      ) : (
+        isTimePickerVisible && (
+          <DateTimePicker
+            value={selectedTime}
+            mode="time"
+            display="default"
+            onChange={handleConfirm}
+          />
+        )
+      )}
+    </View>
   );
 }
 
@@ -160,7 +158,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFF9F5'
+    backgroundColor: '#FFF9F5',
+    marginTop: 36,
+    marginBottom: 16
   },
   header: {
     flexDirection: 'row',

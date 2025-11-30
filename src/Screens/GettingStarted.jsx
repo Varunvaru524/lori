@@ -24,7 +24,7 @@ function GettingStarted({ navigation }) {
         {/* Centered Logo/Illustration */}
         <View style={styles.imageContainer}>
           <Image
-            source={{ uri: 'https://www.themanthanschool.co.in/blog/wp-content/uploads/2022/07/Bedtime-Stories-for-Children-800x576.jpg' }}
+            source={{ uri: 'https://storage.googleapis.com/coozy-dev/Bed-time-stories/onboarding-intro.png' }}
             style={styles.image}
             contentFit="cover"
           />
@@ -47,8 +47,6 @@ function GettingStarted({ navigation }) {
           style={styles.button}
         />
 
-        {/* Bottom safe area */}
-        <View style={styles.safeArea} />
       </View>
     </View>
   )
@@ -58,7 +56,8 @@ function GettingStarted({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF9F5'
+    backgroundColor: '#FFF9F5',
+    marginTop:20
   },
   contentWrapper: {
     flex: 1,
@@ -82,11 +81,9 @@ const styles = StyleSheet.create({
     flex: 1
   },
   imageContainer: {
-    marginHorizontal: -32,
     marginBottom: 48,
     height: 320,
     width: '100%',
-    alignSelf: 'stretch'
   },
   image: {
     width: '100%',

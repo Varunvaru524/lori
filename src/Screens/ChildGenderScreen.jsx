@@ -22,7 +22,6 @@ function ChildGenderScreen({ navigation, route }) {
   };
 
   return (
-    <AppLayout style={styles.appLayout}>
       <View style={styles.container}>
         {/* Header with Back Button */}
         <View style={styles.header}>
@@ -90,7 +89,6 @@ function ChildGenderScreen({ navigation, route }) {
           <View style={styles.safeArea} />
         </View>
       </View>
-    </AppLayout>
   );
 }
 
@@ -100,7 +98,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFF9F5'
+    backgroundColor: '#FFF9F5',
+    marginTop:36,
+    marginBottom: 16
   },
   header: {
     flexDirection: 'row',
